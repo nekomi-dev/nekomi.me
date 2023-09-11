@@ -1,0 +1,19 @@
+button {
+  border: 0;
+}
+
+.btn {
+  cursor: pointer;
+
+  transition: var(--transition);
+
+  &:hover {
+    background: #FFFED5;
+
+    color: #111111;
+  }
+
+  &:active {
+    background: #F4DB01;
+  }
+}
