@@ -5,6 +5,10 @@
   justify-content: space-between;
   align-items: center;
 
+  @media screen and (max-width: 780px){
+    display: block;
+  }
+
   &__container-item {
     display: flex;
     padding: 10px;
@@ -20,6 +24,11 @@
       color: var(--night-2);
 
       background: var(--citrine);
+      font-weight: 700;
+    }
+
+    @media screen and (max-width: 780px){
+      display: none;
     }
   }
 

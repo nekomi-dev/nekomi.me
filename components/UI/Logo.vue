@@ -1,5 +1,5 @@
 <template>
-  <a href="/">nekowrld<span>.fun</span></a>
+  <NuxtLink to="/">nekowrld<span>.fun</span></NuxtLink>
 </template>
 
 <style lang="scss" scoped>

@@ -1,0 +1,29 @@
+<template>
+  <span class="loader"></span>
+</template>
+
+<style scoped>
+.loader {
+  border: 24px solid;
+  border-color: rgba(247, 239, 0, 0.15) rgba(247, 239, 0, 0.25) rgba(247, 239, 0, 0.35) rgba(247, 239, 0, 0.5);
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+}
+
+@keyframes animloader {
+  0% {
+    border-color: rgba(247, 239, 0, 0.15) rgba(247, 239, 0, 0.25) rgba(247, 239, 0, 0.35) rgba(247, 239, 0, 0.75);
+  }
+  33% {
+    border-color: rgba(247, 239, 0, 0.75) rgba(247, 239, 0, 0.15) rgba(247, 239, 0, 0.25) rgba(247, 239, 0, 0.35);
+  }
+  66% {
+    border-color: rgba(247, 239, 0, 0.35) rgba(247, 239, 0, 0.75) rgba(247, 239, 0, 0.15) rgba(247, 239, 0, 0.25);
+  }
+  100% {
+    border-color: rgba(247, 239, 0, 0.25) rgba(247, 239, 0, 0.35) rgba(247, 239, 0, 0.75) rgba(247, 239, 0, 0.15);
+  }
+}
+</style>
