@@ -9,6 +9,7 @@
 @import "/assets/scss/UI";
 @import "/assets/scss/nav";
 @import "/assets/scss/home";
+@import "assets/scss/banner";
 
 .page-enter-active,
 .page-leave-active {
@@ -18,12 +19,6 @@
 .page-leave-to {
   opacity: 0;
   filter: blur(1rem);
-}
-
-body {
-  background: var(--eerie-black-2);
-
-  font-family: "SF UI Display";
 }
 </style>
 

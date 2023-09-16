@@ -1,0 +1,76 @@
+.banner {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  align-self: stretch;
+
+  width: 100%;
+  min-height: 509px;
+  background: var(--eerie-black);
+
+  &__status {
+    display: flex;
+    padding: 5px 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 200px;
+    background: var(--eerie-black-2);
+
+    color: var(--cream);
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  &__container {
+    display: flex;
+    padding: 50px 310px;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+
+    width: 100%;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+
+    width: 100%;
+
+    color: var(--cream);
+    font-size: 52px;
+    font-weight: 700;
+    text-transform: capitalize;
+    max-width: 370px;
+
+    &__container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      &__title {
+        overflow: hidden;
+        color: var(--cream);
+        text-overflow: ellipsis;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      &__more {
+        color: var(--cream-darker);
+        font-size: 18px;
+        font-weight: 300;
+        text-transform: capitalize;
+
+        text-decoration: none;
+      }
+    }
+  }
+}

@@ -38,7 +38,7 @@
     position: relative;
 
     border-radius: 500px;
-    background: #FDCA00;
+    background: var(--gold);
     border: 12px solid var(--gold);
 
     @media screen and (max-width: 1440px){
@@ -132,4 +132,9 @@
       gap: 10px;
     }
   }
+}
+
+#small-star {
+  min-width: 24px;
+  min-height: 23px;
 }
