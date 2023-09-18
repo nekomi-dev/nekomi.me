@@ -78,7 +78,11 @@
         left: 0;
         z-index: -1;
 
-        background: linear-gradient(0deg, #1C1C1C 0.01%, rgba(0, 0, 0, 0.00) 251.76%);
+        background: linear-gradient(
+          0deg,
+          #1c1c1c 0.01%,
+          rgba(0, 0, 0, 0) 251.76%
+        );
 
         border-radius: 20px;
       }
@@ -174,8 +178,4 @@
     background: #f4db01;
     border-radius: 50px;
   }
-}
-
-#cardContainer:nth-child(3) {
-  display: none !important;
 }
