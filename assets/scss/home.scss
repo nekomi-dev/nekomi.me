@@ -42,7 +42,8 @@
     border: 12px solid var(--gold);
 
     @media screen and (max-width: 1440px){
-      height: 20px;
+      height: 29px;
+      border: 6px solid var(--gold);
     }
 
     &--outline {

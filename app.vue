@@ -1,6 +1,8 @@
 <template>
   <NuxtLayout>
-    <NuxtPage></NuxtPage>
+    <div>
+      <NuxtPage></NuxtPage>
+    </div>
   </NuxtLayout>
 </template>
 
@@ -9,7 +11,8 @@
 @import "/assets/scss/UI";
 @import "/assets/scss/nav";
 @import "/assets/scss/home";
-@import "assets/scss/banner";
+@import "/assets/scss/banner";
+@import "/assets/scss/carousel";
 
 .page-enter-active,
 .page-leave-active {

@@ -1,3 +1,5 @@
 <template>
- <h1>There is Categories of Anime</h1>
+  <div>
+    <h1>There is Categories of Anime</h1>
+  </div>
 </template>

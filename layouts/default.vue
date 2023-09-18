@@ -1,12 +1,12 @@
 <template>
-  <div v-if="loading">
-    <BlockNavigation></BlockNavigation>
+    <div v-if="loading">
+      <BlockNavigation></BlockNavigation>
 
-    <NuxtPage></NuxtPage>
-  </div>
-  <div class="loaderScreen" v-else>
-    <UILoader></UILoader>
-  </div>
+      <NuxtPage></NuxtPage>
+    </div>
+    <div class="loaderScreen" v-else>
+      <UILoader></UILoader>
+    </div>
 </template>
 
 <style>
