@@ -65,7 +65,19 @@
 body {
   background: var(--eerie-black-2);
 
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
 
+  &::-webkit-scrollbar-thumb {
+    background: var(--border);
+
+    border-radius: 50px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--eerie-black-2);
+  }
 }
 
 button {
