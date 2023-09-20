@@ -1,10 +1,12 @@
 <template>
-  <div style="display: flex; gap: 30px; flex-direction: column">
-    <BlockBanner></BlockBanner>
+  <div>
+    <div style="display: flex; gap: 30px; flex-direction: column">
+      <BlockBanner></BlockBanner>
 
-    <BlockCarousel></BlockCarousel>
-    <div class="container">
-
+      <BlockCarousel></BlockCarousel>
+      <div class="container">
+        pizda
+      </div>
     </div>
   </div>
 </template>
