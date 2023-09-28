@@ -1,0 +1,30 @@
+on:
+  push:
+    branches: ["main"]
+name: DEPLOY TO SERVER!
+jobs:
+  web-deploy:
+    name: Deploy Failure? Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: GET LAST CODE
+        uses: actions/checkout@v3
+
+      - name: NODE.JS 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: SYNC FILES
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: 5.42.72.147
+          username: deploy_ftp
+          password: EHlFnzDOBXaeySo8
+          server-dir: /www/nekowrld.fun/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.github*/**
+            **/.vscode*/**
