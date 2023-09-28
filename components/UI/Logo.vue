@@ -3,17 +3,17 @@
 </template>
 
 <style lang="scss" scoped>
-  a {
-    color: #FFFED5;
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 2.2px;
-    text-transform: uppercase;
+a {
+  color: var(--cream);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
 
-    text-decoration: none;
+  text-decoration: none;
 
-    span {
-      color: #FDCA00;
-    }
+  span {
+    color: var(--gold);
   }
+}
 </style>

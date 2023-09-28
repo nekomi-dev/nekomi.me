@@ -13,6 +13,7 @@
 @import "/assets/scss/home";
 @import "/assets/scss/banner";
 @import "/assets/scss/carousel";
+@import "/assets/scss/watch-page";
 
 .page-enter-active,
 .page-leave-active {
@@ -24,6 +25,3 @@
   filter: blur(1rem);
 }
 </style>
-
-<script setup>
-</script>

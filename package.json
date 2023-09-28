@@ -15,6 +15,8 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
     "axios": "^1.5.0",
+    "express": "^4.18.2",
+    "kodikwrapper": "^1.0.7",
     "pinia": "^2.1.6",
     "sass": "^1.66.1",
     "swiper": "^10.2.0",

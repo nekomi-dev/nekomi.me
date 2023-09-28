@@ -1,3 +1,8 @@
+#small-neko {
+  position: absolute;
+  top: -8px;
+}
+
 .nav {
   display: flex;
   max-width: 100%;
@@ -5,7 +10,7 @@
   justify-content: space-between;
   align-items: center;
 
-  @media screen and (max-width: 780px){
+  @media screen and (max-width: 780px) {
     display: block;
   }
 
@@ -17,17 +22,20 @@
     align-items: center;
     gap: 10px;
 
+    position: relative;
+
     border-radius: 200px;
     background: var(--eerie-black);
 
-    .router-link-active, .router-link-exact-active {
+    .router-link-active,
+    .router-link-exact-active {
       color: var(--night-2);
 
       background: var(--citrine);
       font-weight: 700;
     }
 
-    @media screen and (max-width: 780px){
+    @media screen and (max-width: 780px) {
       display: none;
     }
   }

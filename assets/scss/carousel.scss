@@ -64,8 +64,12 @@
       border-radius: 20px;
       border: 1px solid var(--border);
 
+      transition: background 0.3s ease;
+
       &:hover + .carousel__body__card__text__title__options {
         display: flex;
+
+        transition: background 0.3s ease;
       }
 
       &:after {
@@ -78,7 +82,13 @@
         left: 0;
         z-index: -1;
 
-        background: linear-gradient(0deg, #1C1C1C 0.01%, rgba(0, 0, 0, 0.00) 251.76%);
+        // background: linear-gradient(
+        //   0deg,
+        //   #1c1c1c 0.01%,
+        //   rgba(0, 0, 0, 0) 251.76%
+        // );
+
+        transition: background 0.3s ease;
 
         border-radius: 20px;
       }
@@ -128,7 +138,8 @@
           flex-direction: column;
 
           &__options {
-            display: none;
+            display: flex;
+            flex-direction: column;
           }
 
           &__more {
@@ -166,7 +177,7 @@
   scroll-behavior: smooth;
   scroll-padding: 0 10px; /* Отступы для плавности скролла */
   scroll-snap-align: start;
-
+  scroll-snap-type: mandatory;
   border-radius: 20px;
 
   &::-webkit-scrollbar {

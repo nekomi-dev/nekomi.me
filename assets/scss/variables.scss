@@ -14,11 +14,22 @@ $x-big: 1829.98px;
   --battleship-gray: #888873;
   --ebony: #616154;
   --border: #272727;
-  --cream: #fffed5;
+  --cream: #fff;
+  --cream-darker: #dcdcdc;
   --citrine: #f4db01;
   --school-bus-yellow: #f9db13;
   --gold: #fbd30a;
   --jonquil: #fdca00;
-  --cream-darker: #DCDCDC;
   --transition: all ease 0.3s;
+
+  --card-background: linear-gradient(
+    0deg,
+    #1c1c1c 0.01%,
+    rgba(0, 0, 0, 0) 251.76%
+  );
+  --card-background-none: linear-gradient(
+    0deg,
+    #1c1c1c 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
