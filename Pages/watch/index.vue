@@ -4,7 +4,7 @@
       <BlockBanner></BlockBanner>
 
       <BlockCarousel></BlockCarousel>
-      <div class="container">pizda</div>
+      <div class="container">pizda polnaya</div>
     </div>
   </div>
 </template>
