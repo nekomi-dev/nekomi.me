@@ -114,13 +114,22 @@ await kodikStore.getTitle({
 useHead({
   title: `${anilibriaStore.infoTitle.names?.ru}`,
   meta: [
-    { property: "og:title", content: `${anilibriaStore.infoTitle.names?.ru}` },
     {
-      property: "og:description",
+      hid: "og:title",
+      name: "og:title",
+      content: `${anilibriaStore.infoTitle.names?.ru}`,
+    },
+    {
+      hid: "og:description",
+      name: "og:title",
       content: `Смотреть ${anilibriaStore.infoTitle.names?.ru} на nekowrld. Совершено бесплатно!`,
     },
-    { property: "og:image", content: "assets/img/chokola_nekopara.png" },
-    { property: "og:url", content: "https://nekoworld.fun" },
+    {
+      property: "og:image",
+      name: "og:title",
+      content: "assets/img/chokola_nekopara.png",
+    },
+    { property: "og:url", name: "og:title", content: "https://nekoworld.fun" },
     { name: "theme-color", content: "#43B581" },
     { twitterCard: "summary_large_image" },
   ],
