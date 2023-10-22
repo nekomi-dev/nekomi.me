@@ -4,7 +4,7 @@
       <BlockBanner></BlockBanner>
 
       <BlockCarousel></BlockCarousel>
-      <div class="container">pizda polnaya</div>
+      <div class="container">pizda polnaya66</div>
     </div>
   </div>
 </template>
@@ -39,7 +39,6 @@ useHead({
       content: "Бесплатный аниме-хостинг для просмотра ваших любимых аниме!",
     },
     { property: "og:image", content: "assets/img/chokola_nekopara.png" },
-    { property: "og:type", content: "website" },
     { property: "og:url", content: "https://nekoworld.fun" },
     { name: "theme-color", content: "#43B581" },
     { twitterCard: "summary_large_image" },

@@ -120,7 +120,6 @@ useHead({
       content: `Смотреть ${anilibriaStore.infoTitle.names?.ru} на nekowrld. Совершено бесплатно!`,
     },
     { property: "og:image", content: "assets/img/chokola_nekopara.png" },
-    { property: "og:type", content: "website" },
     { property: "og:url", content: "https://nekoworld.fun" },
     { name: "theme-color", content: "#43B581" },
     { twitterCard: "summary_large_image" },
