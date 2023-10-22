@@ -1,7 +1,7 @@
 <template>
   <div class="carousel">
     <div class="carousel__text">
-      Летний сезон
+      Осенний сезон
       <div class="carousel__text__caption">
         Узнать больше <IconArrowSecond />
       </div>
@@ -100,7 +100,7 @@ import { anilibria } from "~/store/anilibria";
 const anilibriaStore = anilibria();
 const anilibriaURL = "https://anilibria.tv/";
 
-await anilibriaStore.searchTitle({ season_code: 3, year: 2023, limit: 10 });
+await anilibriaStore.searchTitle({ season_code: 4, year: 2023, limit: 10 });
 
 const cardContainer = ref(null);
 const left = ref(null);

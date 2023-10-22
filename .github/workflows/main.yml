@@ -19,7 +19,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: 5.42.72.147
-          username: deploy_ftp
+          username: torro
           password: EHlFnzDOBXaeySo8
           server-dir: /www/nekowrld.fun/
           exclude: |
