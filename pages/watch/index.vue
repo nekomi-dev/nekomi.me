@@ -36,15 +36,15 @@ useHead({
     { hid: "og:title", name: "og:title", content: "nekowrld" },
     {
       hid: "og:description",
-      name: "og:title",
+      name: "og:description",
       content: "Бесплатный аниме-хостинг для просмотра ваших любимых аниме!",
     },
     {
       hid: "og:image",
-      name: "og:title",
+      name: "og:image",
       content: "assets/img/chokola_nekopara.png",
     },
-    { hid: "og:url", name: "og:title", content: "https://nekoworld.fun" },
+    { hid: "og:url", name: "og:url", content: "https://nekoworld.fun" },
     { name: "theme-color", content: "#43B581" },
     { twitterCard: "summary_large_image" },
   ],
