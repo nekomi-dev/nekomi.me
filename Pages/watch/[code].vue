@@ -94,10 +94,6 @@ const route = useRoute();
 
 await anilibriaStore.getTitle({ code: route.params.code });
 
-useHead({
-  title: `${anilibriaStore.infoTitle.names?.ru}`,
-});
-
 import { shikimori } from "~/store/shikimori.me";
 const shikimoriStore = shikimori();
 const shikimoriURL = "https://shikimori.me";
@@ -113,6 +109,22 @@ await kodikStore.getTitle({
   token: "c73d5f30ac0f1720ef12225c0b683520",
   shikimori_id: shikimoriStore.infoTitle[0].id,
   translation_type: "voice",
+});
+
+useHead({
+  title: `${anilibriaStore.infoTitle.names?.ru}`,
+  meta: [
+    {
+      name: `${anilibriaStore.infoTitle.names?.ru}`,
+      hid: `${anilibriaStore.infoTitle.names?.ru}`,
+      ogTitle: `${anilibriaStore.infoTitle.names?.ru}`,
+      content: `Смотреть ${anilibriaStore.infoTitle.names?.ru} на nekowrld. Совершено бесплатно!`,
+      ogDescription: `Смотреть ${anilibriaStore.infoTitle.names?.ru} на nekowrld. Совершено бесплатно!`,
+      ogImage:
+        "https://shikimori.me" + shikimoriStore.infoTitle[0].image.original,
+      twitterCard: "summary_large_image",
+    },
+  ],
 });
 
 // import { Client } from "kodikwrapper"; // ESM / TypeScript
