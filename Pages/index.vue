@@ -38,23 +38,26 @@
 useHead({
   title: "Главная страница",
   meta: [
+    // {
+    //   // name: "nekowrld",
+    //   // hid: "nekowrld",
+    //   // ogTitle: "nekowrld",
+    //   // content: "Бесплатный аниме-хостинг для просмотра ваших любимых аниме!",
+    //   // ogDescription:
+    //   //   "Бесплатный аниме-хостинг для просмотра ваших любимых аниме!",
+    //   // ogImage: "assets/img/chokola_nekopara.png",
+    //   // twitterCard: "summary_large_image",
+    // },
+    { property: "og:title", content: "nekowrld" },
     {
-      name: "nekowrld",
-      hid: "nekowrld",
-      ogTitle: "nekowrld",
+      property: "og:description",
       content: "Бесплатный аниме-хостинг для просмотра ваших любимых аниме!",
-      ogDescription:
-        "Бесплатный аниме-хостинг для просмотра ваших любимых аниме!",
-      ogImage: "assets/img/chokola_nekopara.png",
-      twitterCard: "summary_large_image",
     },
+    { property: "og:image", content: "assets/img/chokola_nekopara.png" },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://nekoworld.fun" },
+    { name: "theme-color", content: "#43B581" },
+    { twitterCard: "summary_large_image" },
   ],
 });
 </script>
-
-<title>Website Name</title>
-<meta content="Embed Title" property="og:title" />
-<meta content="Site Description" property="og:description" />
-<meta content="https://embed.com/this-is-the-site-url" property="og:url" />
-<meta content="https://embed.com/embedimage.png" property="og:image" />
-<meta content="#43B581" data-react-helmet="true" name="theme-color" />
