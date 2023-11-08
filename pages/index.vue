@@ -35,19 +35,24 @@
   </div>
 </template>
 <script setup>
+useSeoMeta({
+  twitterImage: "https://nekowrld.fun/chokola_nekopara.png",
+  twitterCard: "summary_large_image",
+  twitterDescription:
+    "Бесплатный аниме-хостинг для просмотра ваших любимых аниме!",
+  lang: "ru",
+  twitterTitle: "nekowrld.fun",
+});
+
 useHead({
-  title: "Главная страница",
+  title: "Главная страница!",
+  description: "Бесплатный аниме-хостинг для просмотра ваших любимых аниме!",
   meta: [
-    // {
-    //   // name: "nekowrld",
-    //   // hid: "nekowrld",
-    //   // ogTitle: "nekowrld",
-    //   // content: "Бесплатный аниме-хостинг для просмотра ваших любимых аниме!",
-    //   // ogDescription:
-    //   //   "Бесплатный аниме-хостинг для просмотра ваших любимых аниме!",
-    //   // ogImage: "assets/img/chokola_nekopara.png",
-    //   // twitterCard: "summary_large_image",
-    // },
+    {
+      hid: "description",
+      name: "description",
+      content: "Бесплатный аниме-хостинг для просмотра ваших любимых аниме!",
+    },
     { hid: "og:title", name: "og:title", content: "nekowrld" },
     {
       hid: "og:description",
@@ -57,11 +62,10 @@ useHead({
     {
       hid: "og:image",
       name: "og:image",
-      content: "assets/img/chokola_nekopara.png",
+      content: "https://nekowrld.fun/chokola_nekopara.png",
     },
     { hid: "og:url", name: "og:url", content: "https://nekoworld.fun" },
     { name: "theme-color", content: "#43B581" },
-    { twitterCard: "summary_large_image" },
   ],
 });
 </script>

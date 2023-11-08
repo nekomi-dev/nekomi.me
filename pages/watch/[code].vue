@@ -6,65 +6,83 @@
       type="text/javascript"
     ></Script>
 
-    <Script>
+    <!-- <Script>
       var kodikAddPlayers = { shikimoriID: shikimoriStore.infoTitle[0].id,
       camrip: false, types: "anime,anime-serial", hide_selectors: true, };
       !(function (e, n, t, r, a) { (r = e.createElement(n)), (a =
       e.getElementsByTagName(n)[0]), (r.async = !0), (r.src = t),
       a.parentNode.insertBefore(r, a); })(document, "script",
       "//kodik-add.com/add-players.min.js");
-    </Script>
-    <div class="anime-page">
-      <img
-        class="anime-page__poster"
-        :src="`${
-          'https://shikimori.me' + shikimoriStore.infoTitle[0].image.original
-        }`"
-      />
-      <div class="anime-page__text">
-        <!-- <pre>{{ anilibriaStore.infoTitle.player.list }}</pre> -->
-        <div class="anime-page__text__title">
-          Название: {{ anilibriaStore.infoTitle.names.ru }}
-        </div>
-        <div class="anime-page__text__anoter-title">
-          Другое название: {{ anilibriaStore.infoTitle.names.en }}
-        </div>
-        <div class="anime-page__text__genres">
-          Жанры:
-          <div v-for="genre in anilibriaStore.infoTitle.genres" :key="genre">
-            {{ genre }}
+    </Script> -->
+    <div class="container">
+      <div class="anime-page">
+        <img
+          class="anime-page__poster"
+          :src="`${
+            'https://shikimori.me' + shikimoriStore.infoTitle[0].image.original
+          }`"
+        />
+        <div class="anime-page__text">
+          <!-- <pre>{{ anilibriaStore.infoTitle.player.list }}</pre> -->
+          <div class="anime-page__text__title">
+            Название: {{ anilibriaStore.infoTitle.names.ru }}
+          </div>
+          <div class="anime-page__text__anoter-title">
+            Другое название: {{ anilibriaStore.infoTitle.names.en }}
+          </div>
+          <div class="anime-page__text__genres">
+            Жанры:
+            <div v-for="genre in anilibriaStore.infoTitle.genres" :key="genre">
+              {{ genre }}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="anime-player">
-      <div id="player"></div>
-      <!-- <iframe
+      <div class="anime-player">
+        <div id="player"></div>
+        <!-- <iframe
         style="width: 100%; aspect-ratio: 16/9"
         allowfullscreen="true"
         :src="`${anilibriaStore.infoTitle.player.alternative_player}`"
         frameborder="0"
       ></iframe> -->
-      <iframe
-        style="width: 100%; aspect-ratio: 16/9; height: 100%"
-        :src="`//kodik.cc/find-player?shikimoriID=${shikimoriStore.infoTitle[0].id}&camrip=false&types=anime,anime-serial&hide_selectors=true`"
-        width="610px"
-        height="370px"
-        frameborder="0"
-        allowfullscreen
-        allow="autoplay *; fullscreen *"
-      ></iframe>
-    </div>
+        <iframe
+          id="kodik-player"
+          style="width: 100%; aspect-ratio: 16/9; height: 100%"
+          :src="`//kodik.cc/find-player?shikimoriID=${shikimoriStore.infoTitle[0].id}&camrip=false&types=anime,anime-serial&hide_selectors=false&episode=4`"
+          width="610px"
+          height="370px"
+          frameborder="0"
+          allowfullscreen
+          allow="autoplay *; fullscreen *"
+        ></iframe>
+      </div>
 
-    <div v-for="episode in kodikEpisodes" :key="episode">
-      {{ episode.title }}
-    </div>
+      <!-- <div v-for="episode in kodikEpisodes" :key="episode">
+        {{ episode.title }}
+      </div> -->
 
-    <div v-for="translation in kodikStore.infoTitle.results" :key="translation">
-      {{ translation.translation.title }}
-    </div>
+      <div
+        v-for="translation in kodikStore.infoTitle.results"
+        :key="translation"
+      >
+        <pre>{{ translation.translation.id }}</pre>
+      </div>
 
-    <pre></pre>
+      <div>
+        <select v-model="selectedValue" id="dropdown">
+          <option v-for="episode in kodikEpisodes" :key="episode">
+            {{ episode }}
+          </option>
+        </select>
+        <button @click="addToSelected">Добавить</button>
+        <ul>
+          <li v-for="(value, index) in selectedValues" :key="index">
+            {{ index + 1 }}: {{ value }}
+          </li>
+        </ul>
+      </div>
+    </div>
     <!-- <div v-for="translation in kodikStore.infoTitle"></div> -->
     <!-- <iframe
       style="width: 100%; aspect-ratio: 16/9"
@@ -145,41 +163,60 @@ let kodikEpisodes = [];
 
 for (let i = 0; i < lists.length; i++) {
   const list = lists[i];
-  if (!list.hls.sd === null) {
-    anilibriaLink.push({
-      title: `Серия ${list.episode}`,
-      id: list.episode,
-      file: anilibriaCACHE + list.hls.sd,
-      poster: anilibriaCACHE + list.preview,
-      timing: list.skips.opening,
-    });
-    kodikEpisodes.push({
-      title: `Серия ${list.episode}`,
-    });
-  } else if (!list.hls.hd === null) {
-    anilibriaLink.push({
-      title: `Серия ${list.episode}`,
-      id: list.episode,
-      file: anilibriaCACHE + list.hls.hd,
-      poster: anilibriaCACHE + list.preview,
-      timing: list.skips.opening,
-    });
-    kodikEpisodes.push({
-      title: `Серия ${list.episode}`,
-    });
-  } else {
-    anilibriaLink.push({
-      title: `Серия ${list.episode}`,
-      id: list.episode,
-      file: anilibriaCACHE + list.hls.fhd,
-      poster: anilibriaCACHE + list.preview,
-      timing: list.skips.opening,
-    });
-    kodikEpisodes.push({
-      title: `Серия ${list.episode}`,
-    });
-  }
+  anilibriaLink.push({
+    title: `Серия ${list.episode}`,
+    id: list.episode,
+    file: anilibriaCACHE + list.hls.fhd,
+    poster: anilibriaCACHE + list.preview,
+    timing: list.skips.opening,
+  });
+  kodikEpisodes.push(list.episode);
 }
+
+console.log(kodikEpisodes);
+
+// Реактивное свойство для хранения выбранных значений
+const selectedValues = ref([]);
+
+// Коллекция, которую можно отслеживать
+const selectedValue = ref("");
+
+const addToSelected = ref();
+
+onMounted(() => {
+  addToSelected.value = () => {
+    if (selectedValues.value.length > 0) {
+      selectedValues.value.splice(0, 1);
+    }
+
+    // Добавляем новый выбранный элемент
+    selectedValues.value.push(selectedValue.value);
+    const index = kodikEpisodes.indexOf(Number(selectedValues.value));
+    console.log(index + 1);
+    // var kodikIframe = document.getElementById("kodik-player").contentWindow;
+
+    // const selectedEpisode = computed(() => {
+    //   kodikEpisodes.forEach(function (element, index) {
+    //     console.log(index);
+    //   });
+    // });
+    // const selectedEpisode = () => {
+    //   kodikEpisodes.forEach(function (element, index) {
+    //     console.log(index);
+    //   });
+    // };
+
+    // kodikIframe.postMessage(
+    //   {
+    //     key: "c73d5f30ac0f1720ef12225c0b683520",
+    //     value: { method: "seek", seconds: 67 },
+    //   },
+    //   "*"
+    // );
+
+    console.log(selectedValues.value);
+  };
+});
 
 // for (let i = 0; i < lists.length; i++) {
 //   const list = lists[i];
@@ -220,21 +257,3 @@ const loadPlayer = () => {
 //     // console.log(material);
 //   });
 </script>
-
-<style lang="scss" scoped>
-.anime-page {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-
-  color: white;
-
-  &__text {
-    &__genres {
-      display: flex;
-      flex-direction: row;
-      gap: 5px;
-    }
-  }
-}
-</style>

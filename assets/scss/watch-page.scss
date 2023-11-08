@@ -1,3 +1,15 @@
-.anime-player {
-  padding: 0px 310px;
+.anime-page {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  color: white;
+
+  &__text {
+    &__genres {
+      display: flex;
+      flex-direction: row;
+      gap: 5px;
+    }
+  }
 }

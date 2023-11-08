@@ -1,9 +1,12 @@
 <template>
-  <NuxtLayout>
-    <div>
-      <NuxtPage></NuxtPage>
-    </div>
-  </NuxtLayout>
+  <div>
+    <VitePwaManifest />
+    <NuxtLayout>
+      <div>
+        <NuxtPage></NuxtPage>
+      </div>
+    </NuxtLayout>
+  </div>
 </template>
 
 <style lang="scss">
