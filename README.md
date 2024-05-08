@@ -1,2 +1,2 @@
-# nekowrld
+# nekomi
 Anime website
