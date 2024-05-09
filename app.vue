@@ -10,13 +10,7 @@
 </template>
 
 <style lang="scss">
-@import "/assets/scss/variables";
-@import "/assets/scss/UI";
-@import "/assets/scss/nav";
-@import "/assets/scss/home";
-@import "/assets/scss/banner";
-@import "/assets/scss/carousel";
-@import "/assets/scss/watch-page";
+@import "/assets/scss/imports";
 
 .page-enter-active,
 .page-leave-active {
