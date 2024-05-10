@@ -11,15 +11,18 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
-    "@vite-pwa/nuxt": "^0.1.1",
-    "nuxt": "^3.7.1"
+    "@nuxt/image": "^1.7.0",
+    "nuxt": "^3.7.1",
+    "nuxt-primevue": "^0.3.1"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
     "axios": "^1.5.0",
     "express": "^4.18.2",
     "kodikwrapper": "^1.0.7",
+    "nuxt-swiper": "^1.2.2",
     "pinia": "^2.1.6",
+    "primevue": "^3.52.0",
     "sass": "^1.66.1",
     "swiper": "^10.2.0",
     "vibrant": "^0.0.1"

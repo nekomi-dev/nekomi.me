@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 
   font-family: "Inter";
 }
@@ -24,30 +26,11 @@ body {
   }
 }
 
-button {
-  border: 0;
-}
-
-.btn {
-  cursor: pointer;
-
-  transition: var(--transition);
-
-  &:hover {
-    background: var(--cream);
-
-    color: var(--night-2);
-  }
-
-  &:active {
-    background: var(--citrine);
-  }
-}
-
 .container {
   max-width: 1440px;
 
   margin: 0 auto;
+  margin-top: 81px;
 }
 
 .v-enter-active,
