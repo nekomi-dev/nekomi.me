@@ -4,6 +4,10 @@
 
   background: var(--light-black);
 
+  @media screen and (max-width: $x-large) {
+    padding: 15px 20px;
+  }
+
   &__container {
     width: 100%;
     max-width: 1440px;
@@ -20,6 +24,30 @@
       align-items: center;
       justify-content: center;
       gap: 20px;
+
+      &-burger {
+        display: none !important;
+      }
+
+      @media screen and (max-width: $medium) {
+        &:first-child {
+          & > .nav {
+            display: none;
+          }
+        }
+
+        &-burger {
+          display: flex !important;
+        }
+      }
+
+      @media screen and (max-width: $x-small) {
+        &:last-child {
+          & > .nav {
+            display: none;
+          }
+        }
+      }
     }
   }
 }

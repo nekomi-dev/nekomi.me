@@ -23,6 +23,12 @@
           ><IconIcons settings :size="18" color="var(--white)"
         /></UIButton>
         <UIButton typeStyle="['blue']">Войти</UIButton>
+        <UIButton
+          class="navigation__container-item-burger"
+          typeStyle="['icon', 'blue']"
+        >
+          <IconIcons burger :size="18" color="var(--white)" />
+        </UIButton>
       </div>
     </div>
   </div>

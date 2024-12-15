@@ -219,6 +219,27 @@
   >
     <circle cx="2.32471" cy="2.17236" r="1.5" :fill="props.color" />
   </svg>
+  <svg
+    v-if="props.burger"
+    :width="props.size"
+    :height="props.size"
+    viewBox="0 0 5 4"
+    :fill="props.color"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M0 3.5C0 3.22386 0.223858 3 0.5 3H4.5C4.77614 3 5 3.22386 5 3.5V3.5C5 3.77614 4.77614 4 4.5 4H0.5C0.223858 4 0 3.77614 0 3.5V3.5Z"
+      fill="intherit"
+    />
+    <path
+      d="M0 2C0 1.72386 0.223858 1.5 0.5 1.5H4.5C4.77614 1.5 5 1.72386 5 2V2C5 2.27614 4.77614 2.5 4.5 2.5H0.5C0.223858 2.5 0 2.27614 0 2V2Z"
+      fill="intherit"
+    />
+    <path
+      d="M0 0.5C0 0.223858 0.223858 0 0.5 0H4.5C4.77614 0 5 0.223858 5 0.5V0.5C5 0.776142 4.77614 1 4.5 1H0.5C0.223858 1 0 0.776142 0 0.5V0.5Z"
+      fill="intherit"
+    />
+  </svg>
 </template>
 <script setup>
 const props = defineProps({
@@ -279,6 +300,10 @@ const props = defineProps({
     required: true,
   },
   dot: {
+    type: Boolean,
+    required: true,
+  },
+  burger: {
     type: Boolean,
     required: true,
   },
