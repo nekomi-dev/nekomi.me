@@ -1,5 +1,5 @@
 <template>
-  <div class="navigation" style="background: var(--light-black)">
+  <div class="navigation">
     <div class="navigation__container">
       <div class="navigation__container-item">
         <UILogo class="navigation__logo"></UILogo>
@@ -11,10 +11,11 @@
       </div>
 
       <div class="navigation__container-item">
-        <NuxtLink :to="`/watch/${anilibriaStore.infoRandom.code}`"
-          ><UIButton typeStyle="['nav', 'icon']"
-            ><IconIcons random :size="18" color="var(--white)" /></UIButton
-        ></NuxtLink>
+        <!-- <NuxtLink :to="`/watch/${anilibriaStore.infoRandom.code}`"> --><UIButton
+          typeStyle="['nav', 'icon']"
+          ><IconIcons random :size="18" color="var(--white)"
+        /></UIButton>
+        <!-- </NuxtLink> -->
         <UIButton typeStyle="['nav', 'icon']"
           ><IconIcons search :size="18" color="var(--white)"
         /></UIButton>
@@ -27,8 +28,8 @@
   </div>
 </template>
 <script setup>
-import { anilibria } from "@/store/anilibria";
-const anilibriaStore = anilibria();
+// import { anilibria } from "@/store/anilibria";
+// const anilibriaStore = anilibria();
 
-await anilibriaStore.getTitleRandom();
+// await anilibriaStore.getTitleRandom();
 </script>

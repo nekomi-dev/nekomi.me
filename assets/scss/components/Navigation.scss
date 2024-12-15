@@ -1,0 +1,25 @@
+.navigation {
+  width: 100dvw;
+  padding: 15px 0;
+
+  background: var(--light-black);
+
+  &__container {
+    width: 100%;
+    max-width: 1440px;
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+  }
+}

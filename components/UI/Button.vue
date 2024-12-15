@@ -32,9 +32,12 @@ const classes = computed(() => ({
   transparent: props.typeStyle.includes("transparent"),
   icon: props.typeStyle.includes("icon"),
   blue: props.typeStyle.includes("blue"),
+  blueed: props.typeStyle.includes("blueed"),
+  darkeed: props.typeStyle.includes("darkeed"),
   border: props.typeStyle.includes("border"),
   small: props.typeStyle.includes("small"),
   nav: props.typeStyle.includes("nav"),
+  noInteractive: props.typeStyle.includes("no-interactive"),
 }));
 </script>
 <style lang="scss" scoped>
@@ -49,19 +52,27 @@ const classes = computed(() => ({
   background: var(---gray);
 
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 10px;
+
+  border: 0.7px solid transparent;
 
   &:hover {
     background: var(---light-black);
   }
 }
 
+.noInteractive {
+  pointer-events: none;
+}
+
 .transparent {
   @extend .button;
 
   backdrop-filter: blur(20px);
+  background: rgba(213, 255, 255, 0.2);
 
   &:hover {
     background: var(--black-secondary);
@@ -80,6 +91,18 @@ const classes = computed(() => ({
 
   border: unset;
   background: var(--light-blue);
+}
+
+.blueed {
+  @extend .button;
+
+  background: rgba(55, 110, 255, 0.2);
+}
+
+.darkeed {
+  @extend .button;
+
+  background: rgba(17, 17, 17, 0.2);
 }
 
 .small {
@@ -104,7 +127,7 @@ const classes = computed(() => ({
 
   & ~ .blue {
     &:hover {
-      background: var(--gray);
+      background: var(--dark-blue);
     }
   }
 
