@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <BlockBanner></BlockBanner>
+    <BlockGrid></BlockGrid>
   </div>
 </template>
 <script setup>
