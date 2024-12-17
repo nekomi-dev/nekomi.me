@@ -2,7 +2,7 @@
 <template>
   <div class="grid">
     <div class="grid__filters">
-      <Filters />
+      <UIFilters />
     </div>
     <div class="grid__container">
       <div class="grid__tools">ХУЙНЯ</div>
