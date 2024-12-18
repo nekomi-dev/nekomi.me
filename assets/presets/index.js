@@ -49,5 +49,16 @@ const DefaultPreset = {
       ],
     }),
   },
+  multiselect: {
+    root: "multiselect",
+    trigger: "multiselect__trigger",
+    panel: "multiselect__panel",
+    header: "multiselect__header",
+    filtercontainer: "multiselect__filter-container",
+    closebutton: "multiselect__close-button",
+    filterinput: "multiselect__filter-input",
+    item: "multiselect__item",
+    list: "multiselect__list",
+  },
 };
 export default DefaultPreset;
