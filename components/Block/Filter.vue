@@ -117,15 +117,36 @@
       </div>
     </div>
 
-    <hr class="filter__divider" />
+    <div class="filter__section">
+      <div class="filter__section-name">
+        <label>Период выхода</label>
+        <hr />
+      </div>
+      <div class="filter__period">
+        <input
+          type="number"
+          placeholder="От"
+          v-model="filters.releasePeriodFrom"
+        />
+        <hr class="filter__period-divider" />
+        <input
+          type="number"
+          placeholder="До"
+          v-model="filters.releasePeriodTo"
+        />
+      </div>
+    </div>
 
-    <button
-      v-if="isAnyFilterActive"
-      class="filter__reset"
-      @click="resetFilters"
-    >
-      Сбросить фильтры <IconIcons cancle />
-    </button>
+    <template v-if="isAnyFilterActive">
+      <hr class="filter__divider" />
+      <button
+        v-if="isAnyFilterActive"
+        class="filter__reset"
+        @click="resetFilters"
+      >
+        Сбросить фильтры <IconIcons cancle />
+      </button>
+    </template>
   </div>
 </template>
 
@@ -142,6 +163,8 @@ const filters = ref({
   currentRating: null,
   currentGenre: null,
   currentSort: null,
+  releasePeriodFrom: null,
+  releasePeriodTo: null,
 });
 
 const isAnyFilterActive = computed(() => {
@@ -156,6 +179,8 @@ function resetFilters() {
     currentRating: null,
     currentGenre: null,
     currentSort: null,
+    releasePeriodFrom: null,
+    releasePeriodTo: null,
   };
 }
 </script>
@@ -240,6 +265,24 @@ function resetFilters() {
       width: 16px;
       aspect-ratio: 1;
       fill: var(--white-alpha50);
+    }
+  }
+  &__period {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    input {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 8px;
+      background: var(--light-black);
+      border: 0.7px solid var(--white-alpha10);
+      font-size: 14px;
+    }
+    &-divider {
+      min-width: 15px;
+      height: 2px;
+      background-color: var(--white-alpha10);
     }
   }
 }
