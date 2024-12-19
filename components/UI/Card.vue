@@ -8,7 +8,7 @@
         /></UIButton>
       </div>
       <div class="card__img">
-        <img src="card_poster.png" alt="" />
+        <img src="/card_poster.png" alt="" />
       </div>
     </div>
 
