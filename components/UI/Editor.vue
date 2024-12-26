@@ -1,101 +1,195 @@
-<script setup>
-import Editor from "primevue/editor";
-import { ref } from "vue";
-
-const props = defineProps({
-  placeholder: {
-    type: String,
-    default: "",
-  },
-});
-
-const value = ref("");
-defineEmits(["update:modelValue"]);
-
-const editorOptions = {
-  modules: {
-    toolbar: [
-      ["bold", "italic", "underline"],
-      ["link", "image"],
-      [{ color: [] }, { background: [] }],
-      [{ align: [] }],
-      ["clean"],
-    ],
-  },
-  theme: "snow",
-};
-</script>
-
 <template>
-  <div class="editor">
-    <Editor
-      v-model="value"
-      editorStyle="height: 320px"
-      :placeholder="placeholder"
-      :modules="editorOptions.modules"
-    >
-      <template #toolbar>
-        <span class="ql-formats">
-          <button class="ql-bold"></button>
-          <button class="ql-italic"></button>
-          <button class="ql-underline"></button>
-          <button class="ql-color"></button>
-          <button class="ql-link"></button>
-        </span>
-      </template>
-    </Editor>
+  <div class="editor-wrapper">
+    <editor-content :editor="editor" />
+    <div class="editor-toolbar">
+      <button
+        v-if="editor"
+        @click="editor.chain().focus().toggleBold().run()"
+        :class="{ 'is-active': editor.isActive('bold') }"
+      >
+        <strong>B</strong>
+      </button>
+      <button
+        v-if="editor"
+        @click="editor.chain().focus().toggleItalic().run()"
+        :class="{ 'is-active': editor.isActive('italic') }"
+      >
+        <em>I</em>
+      </button>
+      <button
+        v-if="editor"
+        @click="editor.chain().focus().toggleStrike().run()"
+        :class="{ 'is-active': editor.isActive('strike') }"
+      >
+        <s>S</s>
+      </button>
+      <button
+        v-if="editor"
+        @click="editor.chain().focus().toggleSpoiler().run()"
+        :class="{ 'is-active': editor.isActive('spoiler') }"
+      >
+        [s]
+      </button>
+    </div>
   </div>
 </template>
 
-<style lang="scss">
-.editor {
+<script setup>
+import { useEditor, EditorContent } from "@tiptap/vue-3";
+import StarterKit from "@tiptap/starter-kit";
+import { Mark } from "@tiptap/core";
+import { onMounted } from "vue";
+
+// Создаем расширение для спойлера
+const Spoiler = Mark.create({
+  name: "spoiler",
+
+  addAttributes() {
+    return {
+      class: {
+        default: "spoiler-comm revealed",
+      },
+    };
+  },
+
+  parseHTML() {
+    return [
+      {
+        tag: "span",
+        class: "spoiler-comm",
+      },
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return ["span", HTMLAttributes, 0];
+  },
+
+  addCommands() {
+    return {
+      toggleSpoiler:
+        () =>
+        ({ commands }) => {
+          return commands.toggleMark("spoiler", {
+            class: "spoiler-comm revealed",
+          });
+        },
+    };
+  },
+});
+
+const editor = useEditor({
+  extensions: [StarterKit, Spoiler],
+  content: "",
+  editorProps: {
+    attributes: {
+      class: "editor-content",
+    },
+  },
+});
+
+// Перемещаем обработчик клика в onMounted
+onMounted(() => {
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("spoiler-comm")) {
+      const target = e.target;
+      target.classList.toggle("revealed");
+
+      // Обновляем data-content при открытии спойлера
+      if (target.classList.contains("revealed")) {
+        target.setAttribute("data-content", target.textContent.trim());
+      }
+    }
+  });
+});
+</script>
+
+<style scoped>
+.editor-wrapper {
   border-radius: 8px;
-  background: var(--gray);
-  border: 0.5px solid var(--white-alpha10);
+  background: #1a1a1a;
+  padding: 12px;
+}
 
-  .ql-toolbar {
-    border-bottom: 0.5px solid var(--white-alpha10);
-    padding: 8px;
+.editor-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
 
-    .ql-formats {
-      display: flex;
-      gap: 8px;
-    }
+.editor-toolbar button {
+  background: transparent;
+  border: none;
+  color: #666;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-    button {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      color: var(--white);
+.editor-toolbar button:hover {
+  background: #2a2a2a;
+}
 
-      &:hover {
-        background: var(--white-alpha10);
-      }
+.editor-toolbar button.is-active {
+  color: #4b7bf5;
+}
 
-      .ql-stroke {
-        stroke: var(--white);
-      }
+.editor-content {
+  min-height: 150px;
+  color: #fff;
+}
 
-      .ql-fill {
-        fill: var(--white);
-      }
-    }
+:deep(.editor-content) {
+  strong {
+    font-weight: bold;
   }
 
-  .ql-container {
-    border: none;
-
-    .ql-editor {
-      min-height: 120px;
-      color: var(--white);
-
-      &.ql-blank::before {
-        color: var(--white-alpha50);
-      }
-    }
+  em {
+    font-style: italic;
   }
+
+  s {
+    text-decoration: line-through;
+  }
+
+  .spoiler-comm {
+    background: #2a2a2a;
+    padding: 2px 4px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  p {
+    margin: 0.5em 0;
+  }
+}
+</style>
+
+<style lang="scss">
+.spoiler-comm:not(.revealed)::before {
+  content: "[спойлер] показать";
+  color: #666;
+  font-size: 0.9em;
+}
+
+.spoiler-comm.revealed::before {
+  content: "[" attr(data-content) "]" " скрыть";
+  color: #666;
+  font-size: 0.9em;
+}
+
+.spoiler-comm:not(.revealed) > * {
+  display: none;
+}
+
+/* Добавляем стиль для контейнера спойлера */
+.spoiler-comm {
+  position: relative;
+  display: inline-block;
+}
+
+/* Скрываем оригинальный контент при закрытом спойлере */
+.spoiler-comm:not(.revealed) {
+  color: transparent;
 }
 </style>

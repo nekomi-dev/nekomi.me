@@ -43,17 +43,23 @@
         <div class="player__comments">
           <h2 class="player__comments-title">Комментарии</h2>
 
-          <UIEditor placeholder="Оставить комментарий..." />
+          <UIEditor v-model="comment" />
+
+          <div class="player__comments-list">
+            <div class="player__comments-item">
+              <p class="player__comments-text">
+                {{ comment }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const comment = ref("");
+</script>
 
-<style lang="scss" scoped>
-
-
-
-</style>
+<style lang="scss" scoped></style>

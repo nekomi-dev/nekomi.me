@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "@tiptap/starter-kit": "^2.10.4",
+    "@tiptap/vue-3": "^2.10.4",
     "axios": "^1.5.0",
     "express": "^4.18.2",
     "kodikwrapper": "^1.0.7",
