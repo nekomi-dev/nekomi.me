@@ -245,71 +245,55 @@
 const props = defineProps({
   grid: {
     type: Boolean,
-    required: true,
   },
   columns: {
     type: Boolean,
-    required: true,
   },
   goto: {
     type: Boolean,
-    required: true,
   },
   checked: {
     type: Boolean,
-    required: true,
   },
   cancle: {
     type: Boolean,
-    required: true,
   },
   info: {
     type: Boolean,
-    required: true,
   },
   favorite: {
     type: Boolean,
-    required: true,
   },
   mic: {
     type: Boolean,
-    required: true,
   },
   newWindow: {
     type: Boolean,
-    required: true,
   },
   profile: {
     type: Boolean,
-    required: true,
   },
   random: {
     type: Boolean,
-    required: true,
   },
   rating: {
     type: Boolean,
-    required: true,
   },
   search: {
     type: Boolean,
-    required: true,
   },
   settings: {
     type: Boolean,
-    required: true,
   },
   dot: {
     type: Boolean,
-    required: true,
   },
   burger: {
     type: Boolean,
-    required: true,
   },
 
   size: {
-    type: String,
+    type: Number,
     required: true,
   },
   color: {

@@ -60,5 +60,20 @@ const DefaultPreset = {
     item: "multiselect__item",
     list: "multiselect__list",
   },
+  editor: {
+    root: "editor",
+    toolbar: "editor__toolbar",
+    formats: "editor__formats",
+    header: "editor__header",
+    option: "editor__option",
+    bold: "editor__option-bold",
+    italic: "editor__option-italic",
+    underline: "editor__option-underline",
+    codeBlock: "editor__option-codeBlock",
+    clean: "editor__option-clean",
+    link: "editor__option-link",
+    content: "editor__content",
+    hooks: "editor__hooks",
+  },
 };
 export default DefaultPreset;

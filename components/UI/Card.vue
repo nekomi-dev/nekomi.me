@@ -8,7 +8,7 @@
         /></UIButton>
       </div>
       <div class="card__img">
-        <img src="/card_poster.png" alt="" />
+        <NuxtLink to="/watch"><img src="/card_poster.png" alt="" /></NuxtLink>
       </div>
     </div>
 
@@ -42,9 +42,26 @@
     position: relative;
   }
 
+  &__title {
+    font-size: 18px;
+    font-weight: 700;
+
+    color: var(--white);
+
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 35px;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+
   &__img {
     width: 100%;
     height: 100%;
+
+    cursor: pointer;
 
     & > img {
       width: 100%;
@@ -66,6 +83,17 @@
     align-items: center;
 
     padding: 10px;
+  }
+
+  &__tags {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    color: var(--white-alpha50);
+
+    font-size: 12px;
+    font-weight: 400;
   }
 }
 </style>

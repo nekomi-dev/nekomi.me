@@ -6,11 +6,11 @@
   -webkit-box-sizing: border-box;
 
   font-family: "Inter";
-  color: var(--white);
 }
 
 body {
   background: var(--gray);
+  color: var(--white);
 
   &::-webkit-scrollbar {
     width: 8px;

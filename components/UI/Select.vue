@@ -5,7 +5,7 @@
     optionLabel="name"
     filter
     :placeholder="props.placeholder"
-    :maxSelectedLabels="3"
+    :maxSelectedLabels="2"
   />
 </template>
 
