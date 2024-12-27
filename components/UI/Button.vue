@@ -6,9 +6,16 @@
     @click="props.onClick"
   >
     <slot></slot>
+    <div v-if="$slots.tooltip && !isMobile" class="tooltip-container">
+      <div class="tooltip-content">
+        <slot name="tooltip"></slot>
+      </div>
+    </div>
   </button>
 </template>
 <script setup>
+const { isMobile } = useDevice();
+
 const props = defineProps({
   typeStyle: {
     type: Array,
@@ -153,5 +160,41 @@ const classes = computed(() => ({
     border: 0.7px solid var(--white-alpha10);
     color: var(--white);
   }
+}
+
+.tooltip-container {
+  position: absolute;
+}
+
+.button {
+  position: relative;
+
+  &:hover {
+    .tooltip-content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+}
+
+.tooltip-content {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+
+  padding: 8px 12px;
+  background: var(--gray);
+  border: 0.7px solid var(--white-alpha10);
+  border-radius: 8px;
+
+  color: var(--white-alpha50);
+  font-size: 14px;
+  white-space: nowrap;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
 }
 </style>

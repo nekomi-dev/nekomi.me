@@ -1,6 +1,6 @@
-@import "variables";
+@import "_variables";
 
-@import "reset";
+@import "_reset";
 
 /* PAGES */
 @import "pages/player-page";
@@ -13,7 +13,3 @@
 
 /* SETTINGS */
 @import "settings";
-
-/* QUILL */
-@import "~/node_modules/quill/dist/quill.core.css";
-@import "~/node_modules/quill/dist/quill.snow.css";

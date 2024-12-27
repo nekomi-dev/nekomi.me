@@ -17,7 +17,7 @@ const rating = defineProps({
       'rating-gray': !rating.rate,
     }"
   >
-    <IconIcons rating :size="14" color="var(--white)" />
+    <IconIcons rating :size="12" color="var(--white)" />
 
     <h2 class="rating__rate">{{ rating.rate ? rating.rate : "Нет" }}</h2>
   </div>
@@ -30,7 +30,7 @@ const rating = defineProps({
   justify-content: center;
   gap: 10px;
 
-  padding: 5px 10px;
+  padding: 3px 8px;
 
   border: 0.7px solid var(--white-alpha10);
   border-radius: 18px;
@@ -38,7 +38,7 @@ const rating = defineProps({
   backdrop-filter: blur(20px);
 
   &__rate {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--white);
   }

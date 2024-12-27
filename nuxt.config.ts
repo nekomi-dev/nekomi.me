@@ -10,7 +10,7 @@ export default defineNuxtConfig({
       linkExactActiveClass: "exact-active",
     },
   },
-  modules: ["@pinia/nuxt", "nuxt-primevue", "@nuxt/image", "nuxt-swiper"],
+  modules: ["@pinia/nuxt", "nuxt-primevue", "@nuxt/image", "nuxt-swiper", "@nuxtjs/device"],
   primevue: {
     importPT: {
       as: "DefaultPreset",

@@ -1,5 +1,21 @@
 <template>
   <svg
+    v-if="props.chat"
+    :width="props.size"
+    :height="props.size"
+    viewBox="0 0 15 13"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M12.5 1L2.5 1.00002C1.67157 1.00002 1 1.6716 1 2.50002V7.50003C1 8.32845 1.67157 9.00003 2.5 9.00003H7.50003C7.63264 9.00003 7.75982 9.05271 7.85358 9.14647L10 11.2929V9.50003C10 9.22389 10.2239 9.00003 10.5 9.00003H12.5C13.3284 9.00003 14 8.32845 14 7.50003V2.5C14 1.67157 13.3284 1 12.5 1ZM2.49999 2.29478e-05L12.5 0C13.8807 0 15 1.11929 15 2.5V7.50003C15 8.88074 13.8807 10 12.5 10H11V12.5C11 12.7022 10.8782 12.8845 10.6913 12.9619C10.5045 13.0393 10.2894 12.9965 10.1464 12.8536L7.29292 10H2.5C1.11929 10 0 8.88074 0 7.50003V2.50002C0 1.11931 1.11928 2.59578e-05 2.49999 2.29478e-05Z"
+      :stroke="props.filled ? none : props.color"
+      :fill="props.filled ? props.color : none"
+    />
+  </svg>
+  <svg
     v-if="props.grid"
     :width="props.size"
     :height="props.size"
@@ -243,6 +259,9 @@
 </template>
 <script setup>
 const props = defineProps({
+  chat: {
+    type: Boolean,
+  },
   grid: {
     type: Boolean,
   },

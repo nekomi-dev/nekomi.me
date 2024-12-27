@@ -12,11 +12,13 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxt/image": "^1.7.0",
+    "@nuxtjs/device": "^3.2.4",
     "nuxt": "^3.7.1",
     "nuxt-primevue": "^0.3.1"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "@tiptap/extension-placeholder": "^2.10.4",
     "@tiptap/starter-kit": "^2.10.4",
     "@tiptap/vue-3": "^2.10.4",
     "axios": "^1.5.0",

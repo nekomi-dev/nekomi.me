@@ -2,52 +2,153 @@
   <div class="editor-wrapper">
     <editor-content :editor="editor" />
     <div class="editor-toolbar">
-      <button
+      <!-- <button
         v-if="editor"
         @click="editor.chain().focus().toggleBold().run()"
         :class="{ 'is-active': editor.isActive('bold') }"
       >
         <strong>B</strong>
-      </button>
-      <button
+      </button> -->
+      <UIButton
+        v-if="editor"
+        @click="editor.chain().focus().toggleBold().run()"
+        :class="{ 'is-active': editor.isActive('bold') }"
+        typeStyle="['nav', 'icon']"
+      >
+        <strong>B</strong>
+
+        <template #tooltip>⌘B</template>
+      </UIButton>
+      <UIButton
         v-if="editor"
         @click="editor.chain().focus().toggleItalic().run()"
         :class="{ 'is-active': editor.isActive('italic') }"
+        typeStyle="['nav', 'icon']"
       >
-        <em>I</em>
-      </button>
-      <button
+        <em>i</em>
+
+        <template #tooltip>⌘i</template>
+      </UIButton>
+      <UIButton
         v-if="editor"
         @click="editor.chain().focus().toggleStrike().run()"
         :class="{ 'is-active': editor.isActive('strike') }"
+        typeStyle="['nav', 'icon']"
       >
         <s>S</s>
-      </button>
-      <button
+
+        <template #tooltip>⌘⇧S</template>
+      </UIButton>
+      <UIButton
         v-if="editor"
         @click="editor.chain().focus().toggleSpoiler().run()"
         :class="{ 'is-active': editor.isActive('spoiler') }"
+        typeStyle="['nav', 'icon']"
       >
-        [s]
-      </button>
+        {s}
+
+        <template #tooltip>⌘⇧R</template>
+      </UIButton>
     </div>
   </div>
 </template>
 
 <script setup>
 import { useEditor, EditorContent } from "@tiptap/vue-3";
+import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
 import { Mark } from "@tiptap/core";
-import { onMounted } from "vue";
 
-// Создаем расширение для спойлера
+const props = defineProps({
+  placeholder: {
+    default: "",
+    type: String,
+  },
+});
+
+// Расширения
+const Bold = Mark.create({
+  name: "bold",
+
+  addAttributes() {
+    return {
+      class: {
+        default: "bold-comm",
+      },
+    };
+  },
+
+  parseHTML() {
+    return [
+      {
+        tag: "strong",
+        class: "bold-comm",
+      },
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return ["strong", HTMLAttributes, 0];
+  },
+});
+
+const Italic = Mark.create({
+  name: "italic",
+
+  addAttributes() {
+    return {
+      class: {
+        default: "italic-comm",
+      },
+    };
+  },
+
+  parseHTML() {
+    return [
+      {
+        tag: "em",
+        class: "italic-comm",
+      },
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return ["em", HTMLAttributes, 0];
+  },
+});
+
+const Strike = Mark.create({
+  name: "strike",
+
+  addAttributes() {
+    return {
+      class: {
+        default: "strike-comm",
+      },
+    };
+  },
+
+  parseHTML() {
+    return [
+      {
+        tag: "s",
+        class: "strike-comm",
+      },
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return ["s", HTMLAttributes, 0];
+  },
+});
+
 const Spoiler = Mark.create({
   name: "spoiler",
 
   addAttributes() {
     return {
       class: {
-        default: "spoiler-comm revealed",
+        default: "spoiler-comm",
       },
     };
   },
@@ -65,22 +166,37 @@ const Spoiler = Mark.create({
     return ["span", HTMLAttributes, 0];
   },
 
+  // Добавляем команды для переключения спойлера
   addCommands() {
     return {
       toggleSpoiler:
         () =>
         ({ commands }) => {
-          return commands.toggleMark("spoiler", {
-            class: "spoiler-comm revealed",
-          });
+          return commands.toggleMark(this.name);
         },
+    };
+  },
+
+  addKeyboardShortcuts() {
+    return {
+      // ↓ your new keyboard shortcut
+      "Mod-shift-r": () => this.editor.commands.toggleMark(this.name),
     };
   },
 });
 
 const editor = useEditor({
-  extensions: [StarterKit, Spoiler],
   content: "",
+  extensions: [
+    StarterKit,
+    Spoiler,
+    Bold,
+    Italic,
+    Strike,
+    Placeholder.configure({
+      placeholder: props.placeholder,
+    }),
+  ],
   editorProps: {
     attributes: {
       class: "editor-content",
@@ -93,103 +209,147 @@ onMounted(() => {
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("spoiler-comm")) {
       const target = e.target;
+      const content = target.textContent.trim();
       target.classList.toggle("revealed");
-
-      // Обновляем data-content при открытии спойлера
-      if (target.classList.contains("revealed")) {
-        target.setAttribute("data-content", target.textContent.trim());
-      }
     }
   });
+});
+
+onBeforeUnmount(() => {
+  unref(editor).destroy();
 });
 </script>
 
 <style scoped>
 .editor-wrapper {
-  border-radius: 8px;
-  background: #1a1a1a;
-  padding: 12px;
+  width: 100%;
+  padding: 20px 25px;
+
+  background: var(--gray);
+  border: 0.7px solid var(--white-alpha10);
+
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .editor-toolbar {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 8px;
-}
 
-.editor-toolbar button {
-  background: transparent;
-  border: none;
-  color: #666;
-  padding: 4px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.editor-toolbar button:hover {
-  background: #2a2a2a;
-}
-
-.editor-toolbar button.is-active {
-  color: #4b7bf5;
-}
-
-.editor-content {
-  min-height: 150px;
-  color: #fff;
-}
-
-:deep(.editor-content) {
   strong {
     font-weight: bold;
   }
 
   em {
-    font-style: italic;
+    rotate: 12deg;
   }
 
   s {
     text-decoration: line-through;
   }
+}
 
-  .spoiler-comm {
-    background: #2a2a2a;
-    padding: 2px 4px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+.editor-toolbar button {
+  width: 35px;
+  height: 35px;
 
-  p {
-    margin: 0.5em 0;
-  }
+  padding: 12px;
+
+  font-size: 14px;
+
+  /* display: grid;
+  place-content: center; */
+
+  border-radius: 12px;
+
+  user-select: none;
+}
+
+.editor-toolbar button:hover {
+  background: var(--light-black);
+}
+
+.editor-toolbar button.is-active {
+  background: var(--light-gray);
+  border: 0.7px solid var(--white-alpha10);
+  color: var(--white);
+}
+
+.editor-content {
+  min-height: 150px;
+  color: var(--white);
+
+  font-size: 14px;
 }
 </style>
 
 <style lang="scss">
-.spoiler-comm:not(.revealed)::before {
-  content: "[спойлер] показать";
-  color: #666;
-  font-size: 0.9em;
+p.is-editor-empty:first-child::before {
+  color: var(--white-alpha50);
+  font-size: 14px;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }
 
-.spoiler-comm.revealed::before {
-  content: "[" attr(data-content) "]" " скрыть";
-  color: #666;
-  font-size: 0.9em;
-}
-
-.spoiler-comm:not(.revealed) > * {
-  display: none;
-}
-
-/* Добавляем стиль для контейнера спойлера */
 .spoiler-comm {
   position: relative;
   display: inline-block;
+  padding: 0 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  // user-select: none;
+  background-color: #2a2a2a;
+  width: 80px;
+  height: 25px;
+  text-align: left;
+  margin-right: 4px;
+  vertical-align: middle;
+
+  margin: auto 0;
 }
 
-/* Скрываем оригинальный контент при закрытом спойлере */
-.spoiler-comm:not(.revealed) {
+.spoiler-comm {
   color: transparent;
+}
+
+.spoiler-comm:hover {
+  color: #fff;
+  width: auto;
+  height: auto;
+  min-height: 25px;
+  z-index: 1;
+}
+
+.spoiler-comm::before {
+  content: "[спойлер]";
+  color: #666;
+  font-size: 0.9em;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.spoiler-comm:hover::before {
+  display: none;
+}
+
+.bold-comm {
+  font-weight: bold;
+}
+
+.italic-comm {
+  font-style: italic;
+}
+
+.strike-comm {
+  text-decoration: line-through;
 }
 </style>

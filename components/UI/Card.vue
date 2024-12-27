@@ -63,7 +63,9 @@
 
     cursor: pointer;
 
-    & > img {
+    border-radius: 8px;
+
+    img {
       width: 100%;
       height: 100%;
 
