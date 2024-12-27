@@ -1,70 +1,85 @@
 <template>
-  <div class="container">
-    <div class="player">
-      <div class="player__container">
-        <div class="player__video" :class="{ closed: !isChat }">
-          <div class="player__iframe">
-            <iframe
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=1234567890"
-              frameborder="0"
-            ></iframe>
+  <div>
+    <Script
+      @load="loadPlayer"
+      src="/lib/player.js"
+      type="text/javascript"
+    ></Script>
 
-            <div class="player__episodes">
-              <div
-                v-for="item in episodes"
-                class="player__episodes-item"
-                :class="{
-                  'player__episodes-item--active': selects.currentItem === item,
-                }"
-                :key="item"
-                @click="selects.currentItem = item"
-              >
-                {{ item + " серия" }}
+    <div class="container">
+      <div class="player">
+        <div class="player__container">
+          <div class="player__video" :class="{ closed: !isChat }">
+            <div class="player__videoPlayer">
+              <!-- <video
+                src="/anime_video.mp4"
+                controls
+                autoplay
+                preload="auto"
+              ></video> -->
+              <div id="player"></div>
+
+              <div class="player__episodes">
+                <div
+                  v-for="item in episodes"
+                  class="player__episodes-item"
+                  :class="{
+                    'player__episodes-item--active':
+                      selects.currentItem === item,
+                  }"
+                  :key="item"
+                  @click="selects.currentItem = item"
+                >
+                  {{ item + " серия" }}
+                </div>
+              </div>
+            </div>
+
+            <div class="player__info">
+              <div class="player__info-text">
+                <h1 class="player__info-title">Реинкарнация Безработного</h1>
+
+                <p class="player__info-tags">
+                  <span>12 серий</span>
+                  <IconIcons dot :size="3" color="var(--white-alpha50)" />
+                  <span>Реклама</span>
+                  <IconIcons dot :size="3" color="var(--white-alpha50)" />
+                  <span>nekomi.player</span>
+                </p>
+              </div>
+              <div class="player__info-tools">
+                <UIButton typeStyle="['transparent', 'blueed', 'icon']">
+                  <IconIcons mic :size="16" color="var(--white)" />
+                  Озвучка
+                </UIButton>
+
+                <UIButton typeStyle="['transparent', 'icon']">
+                  <IconIcons favorite filled :size="16" color="var(--white)" />
+                </UIButton>
+
+                <UIButton
+                  typeStyle="['transparent', 'icon']"
+                  @click="toggleChat()"
+                >
+                  <IconIcons chat :size="16" color="var(--white)" />
+                </UIButton>
               </div>
             </div>
           </div>
 
-          <div class="player__info">
-            <div class="player__info-text">
-              <h1 class="player__info-title">Реинкарнация Безработного</h1>
+          <Transition :name="isMobile ? 'slide-up' : 'slide-left'">
+            <div class="player__comments" v-show="isChat">
+              <h2 class="player__comments-title">Комментарии</h2>
 
-              <p class="player__info-tags">
-                <span>12 серий</span>
-                <IconIcons dot :size="3" color="var(--white-alpha50)" />
-                <span>Реклама</span>
-                <IconIcons dot :size="3" color="var(--white-alpha50)" />
-                <span>nekomi.player</span>
-              </p>
+              <UIEditor
+                v-model="comment"
+                placeholder="Оставить комментарий..."
+              />
+
+              <div class="player__comments-list"></div>
             </div>
-            <div class="player__info-tools">
-              <UIButton typeStyle="['transparent', 'blueed', 'icon']">
-                <IconIcons mic :size="16" color="var(--white)" />
-                Озвучка
-              </UIButton>
-
-              <UIButton typeStyle="['transparent', 'icon']">
-                <IconIcons favorite filled :size="16" color="var(--white)" />
-              </UIButton>
-
-              <UIButton
-                typeStyle="['transparent', 'icon']"
-                @click="toggleChat()"
-              >
-                <IconIcons chat :size="16" color="var(--white)" />
-              </UIButton>
-            </div>
-          </div>
+          </Transition>
         </div>
-
-        <Transition :name="isMobile ? 'slide-up' : 'slide-left'">
-          <div class="player__comments" v-show="isChat">
-            <h2 class="player__comments-title">Комментарии</h2>
-
-            <UIEditor v-model="comment" placeholder="Оставить комментарий..." />
-
-            <div class="player__comments-list"></div>
-          </div>
-        </Transition>
       </div>
     </div>
   </div>
@@ -110,6 +125,13 @@ const toggleChat = () => {
 };
 
 const comment = ref("");
+
+const loadPlayer = () => {
+  let player = new Playerjs({
+    id: "player",
+    file: "/anime_video.mp4",
+  });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -149,7 +171,13 @@ const comment = ref("");
     @media (max-width: $medium) {
       width: 100%;
 
-      iframe {
+      video {
+        height: unset;
+
+        aspect-ratio: 16/9;
+      }
+
+      #player {
         height: unset;
 
         aspect-ratio: 16/9;
@@ -157,10 +185,10 @@ const comment = ref("");
     }
   }
 
-  &__iframe {
+  &__videoPlayer {
     width: 100%;
 
-    & > iframe {
+    & > video {
       width: 100%;
       margin-bottom: 10px;
 
@@ -168,6 +196,18 @@ const comment = ref("");
 
       border-radius: 20px;
       border: 2px solid var(--white-alpha10);
+    }
+
+    & > #player {
+      width: 100%;
+      margin-bottom: 10px;
+
+      aspect-ratio: 16/9;
+
+      border-radius: 20px;
+      border: 2px solid var(--white-alpha10);
+
+      overflow: hidden;
     }
   }
 
@@ -291,7 +331,7 @@ const comment = ref("");
 //   .player__video {
 //     width: 100%;
 
-//     iframe {
+//     video {
 //       height: unset;
 
 //       aspect-ratio: 16/9;
@@ -309,4 +349,37 @@ const comment = ref("");
 //     gap: 20px;
 //   }
 // }
+
+.slide-left-enter-active,
+.slide-down-enter-active,
+.slide-down-leave-active,
+.slide-up-enter-active,
+.slide-up-leave-active,
+.slide-left-leave-active {
+  transition: all 0.2s;
+}
+.slide-left-enter-from {
+  opacity: 0;
+  transform: translate(50px, 0);
+}
+.slide-left-leave-to {
+  opacity: 0;
+  transform: translate(50px, 0);
+}
+.slide-down-enter-from {
+  opacity: 0;
+  transform: translate(0, 50px);
+}
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translate(0, 50px);
+}
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translate(0, -50px);
+}
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translate(0, -50px);
+}
 </style>

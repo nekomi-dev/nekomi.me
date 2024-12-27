@@ -144,7 +144,8 @@
         class="filter__reset"
         @click="resetFilters"
       >
-        Сбросить фильтры <IconIcons cancle />
+        Сбросить фильтры
+        <IconIcons cancle :size="12" color="var(--white-alpha50)" />
       </button>
     </template>
   </div>
@@ -185,7 +186,7 @@ function resetFilters() {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .filter {
   width: 300px;
   display: flex;
