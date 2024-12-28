@@ -1,8 +1,16 @@
 <script setup>
+import { shikimori } from "~/store/shikimori.me";
+const shikimoriStore = shikimori();
+const shikimoriURL = "https://shikimori.one";
+
 const { isMobile } = useDevice();
 
 const search = ref("");
 const view = ref("grid");
+
+const { data } = useAsyncData("shikimori-all", async () => {
+  return await shikimoriStore.getTitles();
+});
 </script>
 <template>
   <div class="grid">
@@ -48,7 +56,7 @@ const view = ref("grid");
         </div>
       </div>
       <div class="grid__wrapper">
-        <UICard v-for="i in 10" :key="i"></UICard>
+        <UICard v-for="(item, idx) in data" :key="idx" :card="item"></UICard>
       </div>
     </div>
   </div>

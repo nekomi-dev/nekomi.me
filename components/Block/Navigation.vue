@@ -4,24 +4,45 @@
       <div class="navigation__container-item">
         <UILogo class="navigation__logo"></UILogo>
 
-        <UIButton typeStyle="['nav']">Каталог</UIButton>
-        <UIButton typeStyle="['nav']">Новости</UIButton>
-        <UIButton typeStyle="['nav']">Расписание</UIButton>
-        <UIButton typeStyle="['nav']">Поддержать проект</UIButton>
+        <UIButton typeStyle="['nav']" tooltipBottom disabled
+          >Каталог <template #tooltip> Временно недоступно </template></UIButton
+        >
+        <UIButton typeStyle="['nav']" tooltipBottom disabled
+          >Новости <template #tooltip> Временно недоступно </template></UIButton
+        >
+        <UIButton typeStyle="['nav']" tooltipBottom disabled
+          >Расписание
+          <template #tooltip> Временно недоступно </template></UIButton
+        >
+        <UIButton typeStyle="['nav']" tooltipBottom disabled
+          >Поддержать проект
+          <template #tooltip> Временно недоступно </template></UIButton
+        >
       </div>
 
       <div class="navigation__container-item">
         <!-- <NuxtLink :to="`/watch/${anilibriaStore.infoRandom.code}`"> --><UIButton
           typeStyle="['nav', 'icon']"
-          ><IconIcons random :size="18" color="var(--white)"
-        /></UIButton>
+          tooltipBottom
+          @click="getRandomAnime"
+          ><IconIcons random :size="18" color="var(--white)" /><template
+            #tooltip
+          >
+            Случайное аниме
+          </template></UIButton
+        >
         <!-- </NuxtLink> -->
-        <UIButton typeStyle="['nav', 'icon']"
-          ><IconIcons search :size="18" color="var(--white)"
-        /></UIButton>
-        <UIButton typeStyle="['nav', 'icon']"
-          ><IconIcons settings :size="18" color="var(--white)"
-        /></UIButton>
+        <UIButton typeStyle="['nav', 'icon']" tooltipBottom disabled
+          ><IconIcons search :size="18" color="var(--white)" />
+          <template #tooltip> Поиск </template>
+        </UIButton>
+        <UIButton typeStyle="['nav', 'icon']" tooltipBottom disabled
+          ><IconIcons settings :size="18" color="var(--white)" /><template
+            #tooltip
+          >
+            Настройки
+          </template></UIButton
+        >
         <UIButton
           v-if="!isAuth"
           @click="router.push('/auth')"
@@ -57,6 +78,26 @@ const { isAuth, user, logout } = useAuth();
 // const anilibriaStore = anilibria();
 
 // await anilibriaStore.getTitleRandom();
+
+import { shikimori } from "~/store/shikimori.me";
+const shikimoriStore = shikimori();
+const shikimoriURL = "https://shikimori.one";
+
+// Добавляем реактивную переменную для хранения случайного аниме
+const randomAnime = ref(null);
+
+// Функция для получения случайного аниме
+const getRandomAnime = async () => {
+  randomAnime.value = await shikimoriStore.getTitleRandom();
+  router.push(
+    `/watch/${randomAnime.value[0]?.id}-${randomAnime.value[0]?.name}`
+  );
+};
+
+// Загружаем первое случайное аниме при монтировании
+onMounted(async () => {
+  randomAnime.value = await shikimoriStore.getTitleRandom();
+});
 </script>
 
 <style lang="scss" scoped>

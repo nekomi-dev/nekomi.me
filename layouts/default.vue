@@ -2,6 +2,7 @@
   <div v-if="loading">
     <BlockNavigation></BlockNavigation>
     <NuxtPage></NuxtPage>
+    <BlockFooter></BlockFooter>
   </div>
   <div class="loaderScreen" v-else>
     <UILoader></UILoader>

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 
-const shikimoriAPI = "https://shikimori.me/api";
-const shikimoriURL = "https://shikimori.me";
+const shikimoriAPI = "https://shikimori.one/api";
+const shikimoriURL = "https://shikimori.one";
 
 const shikimoriGrabber = "https://smarthard.net/api";
 
@@ -30,10 +30,11 @@ export const shikimori = defineStore({
       try {
         const res = await axios({
           method: "GET",
-          url: `${shikimoriAPI}/animes`,
-          params,
+          url: `${shikimoriAPI}/animes/${params.id}`,
         });
         this.title = res.data;
+
+        return res.data;
       } catch (err) {
         console.error(err);
       }
@@ -42,9 +43,11 @@ export const shikimori = defineStore({
       try {
         const res = await axios({
           method: "GET",
-          url: `${shikimoriAPI}/animes?limit=10`,
+          url: `${shikimoriAPI}/animes?limit=25&order=popularity`,
         });
         this.titleList = res.data;
+
+        return res.data;
       } catch (err) {
         console.error(err);
       }
@@ -56,6 +59,8 @@ export const shikimori = defineStore({
           url: `${shikimoriAPI}/animes?order=random`,
         });
         this.titleRandom = res.data;
+
+        return res.data;
       } catch (err) {
         console.error(err);
       }
@@ -68,6 +73,8 @@ export const shikimori = defineStore({
           params,
         });
         this.titleSearch = res.data;
+
+        return res.data;
       } catch (err) {
         console.error(err);
       }
@@ -80,6 +87,8 @@ export const shikimori = defineStore({
           params,
         });
         this.titleVideo = res.data;
+
+        return res.data;
       } catch (err) {
         console.error(err);
       }

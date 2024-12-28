@@ -1,46 +1,51 @@
 <template>
   <div>
-    <Script
+    <!-- <Script
       @load="loadPlayer"
       src="/lib/player.js"
       type="text/javascript"
-    ></Script>
+    ></Script> -->
 
-    <div class="container">
+    <div
+      class="container container--player"
+      :class="{ 'container--player-reduced': !isChat }"
+    >
       <div class="player">
         <div class="player__container">
           <div class="player__video" :class="{ closed: !isChat }">
             <div class="player__videoPlayer">
-              <!-- <video
+              <video
                 src="/anime_video.mp4"
                 controls
                 autoplay
                 preload="auto"
-              ></video> -->
-              <div id="player"></div>
+              ></video>
+              <!-- <div id="player"></div> -->
 
               <div class="player__episodes">
                 <div
-                  v-for="item in episodes"
+                  v-for="idx in data?.episodes"
                   class="player__episodes-item"
                   :class="{
                     'player__episodes-item--active':
-                      selects.currentItem === item,
+                      selects.currentItem === idx--,
                   }"
-                  :key="item"
-                  @click="selects.currentItem = item"
+                  :key="idx"
+                  @click="selects.currentItem = idx--"
                 >
-                  {{ item + " серия" }}
+                  {{ idx++ + " серия" }}
                 </div>
               </div>
             </div>
 
             <div class="player__info">
               <div class="player__info-text">
-                <h1 class="player__info-title">Реинкарнация Безработного</h1>
+                <h1 class="player__info-title">
+                  {{ data?.license_name_ru || data?.russian || data?.name }}
+                </h1>
 
                 <p class="player__info-tags">
-                  <span>12 серий</span>
+                  <span>{{ data?.episodes }} эпизодов</span>
                   <IconIcons dot :size="3" color="var(--white-alpha50)" />
                   <span>Реклама</span>
                   <IconIcons dot :size="3" color="var(--white-alpha50)" />
@@ -86,7 +91,19 @@
 </template>
 
 <script setup>
+import { shikimori } from "~/store/shikimori.me";
+const shikimoriStore = shikimori();
+const shikimoriURL = "https://shikimori.one";
+
+const route = useRoute();
+
 const { isMobile } = useDevice();
+
+const { data } = await useAsyncData("shikimori-one", async () => {
+  return await shikimoriStore.getTitle({
+    id: route.params.id,
+  });
+});
 
 const episodes = [
   "1",
@@ -126,19 +143,28 @@ const toggleChat = () => {
 
 const comment = ref("");
 
-const loadPlayer = () => {
-  let player = new Playerjs({
-    id: "player",
-    file: "/anime_video.mp4",
-  });
-};
+// const loadPlayer = () => {
+//   let player = new Playerjs({
+//     id: "player",
+//     file: "/anime_video.mp4",
+//   });
+// };
 </script>
 
 <style lang="scss" scoped>
 @import "~/assets/scss/imports";
 
+.container--player {
+  height: calc(100dvh - 250px);
+
+  &-reduced {
+    height: 100dvh;
+  }
+}
+
 .player {
   width: 100%;
+  margin: auto 0;
 
   border-radius: 20px;
   background: var(--light-gray);

@@ -1,13 +1,16 @@
 <template>
   <button
-    :class="classes"
+    :class="[classes, { disabled: props.disabled }]"
     :disabled="props.disabled"
     :type="props.type"
     @click="props.onClick"
   >
     <slot></slot>
     <div v-if="$slots.tooltip && !isMobile" class="tooltip-container">
-      <div class="tooltip-content">
+      <div
+        class="tooltip-content"
+        :class="{ 'tooltip-bottom': props.tooltipBottom }"
+      >
         <slot name="tooltip"></slot>
       </div>
     </div>
@@ -31,6 +34,10 @@ const props = defineProps({
   },
   onClick: {
     type: Function,
+  },
+  tooltipBottom: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -69,6 +76,10 @@ const classes = computed(() => ({
   &:hover {
     background: var(---light-black);
   }
+}
+
+.disabled {
+  cursor: not-allowed;
 }
 
 .noInteractive {
@@ -196,5 +207,15 @@ const classes = computed(() => ({
   opacity: 0;
   visibility: hidden;
   transition: all 0.2s ease;
+
+  &.tooltip-bottom {
+    bottom: unset;
+    top: calc(100% + 20px);
+    transform: translateX(-50%) translateY(-5px);
+
+    &:hover {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
 }
 </style>

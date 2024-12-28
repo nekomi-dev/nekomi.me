@@ -2,29 +2,40 @@
   <div class="card">
     <div class="card__info">
       <div class="card__tools">
-        <UIRating :rate="10" />
+        <UIRating :rate="Math.round(card?.score)" />
         <UIButton typeStyle="['transparent', 'icon']"
           ><IconIcons favorite :size="13" color="var(--white)"
         /></UIButton>
       </div>
-      <div class="card__img">
-        <NuxtLink to="/watch"><img src="/card_poster.png" alt="" /></NuxtLink>
-      </div>
+      <NuxtLink :to="`/watch/${card?.id}-${card?.name}`"
+        ><div class="card__img">
+          <img :src="shikimoriURL + card?.image?.preview" alt="" /></div
+      ></NuxtLink>
     </div>
 
-    <h3 class="card__title">Реинкарнация Безработного</h3>
+    <h3 class="card__title">{{ card?.russian || card?.name }}</h3>
 
     <div class="card__tags">
-      <span>Весна</span>
+      <span>{{ getSeason(card?.aired_on) }}</span>
       <IconIcons dot :size="3" color="var(--white-alpha50)" />
-      <span>2024</span>
+      <span>{{ formatYear(card?.aired_on) }}</span>
       <IconIcons dot :size="3" color="var(--white-alpha50)" />
-      <span>12 серий</span>
+      <span>{{ card?.episodes }} эпизодов</span>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script setup>
+const { formatYear, getSeason } = useFormatDate();
+const shikimoriURL = "https://shikimori.one";
+
+defineProps({
+  card: {
+    type: Object,
+    required: true,
+  },
+});
+</script>
 
 <style scoped lang="scss">
 .card {
@@ -59,15 +70,17 @@
 
   &__img {
     width: 100%;
-    height: 100%;
+    height: 240px;
 
     cursor: pointer;
 
     border-radius: 8px;
 
-    img {
+    & > img {
       width: 100%;
       height: 100%;
+
+      object-fit: cover;
 
       border-radius: 8px;
     }

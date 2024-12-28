@@ -5,6 +5,14 @@
   </div>
 </template>
 <script setup>
+import { shikimori } from "~/store/shikimori.me";
+const shikimoriStore = shikimori();
+const shikimoriURL = "https://shikimori.one";
+
+const { data } = useAsyncData("shikimori", async () => {
+  return await shikimoriStore.getTitleRandom();
+});
+
 useSeoMeta({
   twitterImage: "https://nekowrld.fun/chokola_nekopara.png",
   twitterCard: "summary_large_image",
