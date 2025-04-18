@@ -13,7 +13,9 @@
       ></NuxtLink>
     </div>
 
-    <h3 class="card__title">{{ card?.russian || card?.name }}</h3>
+    <h3 class="card__title" :title="card?.russian">
+      {{ card?.russian || card?.name }}
+    </h3>
 
     <div class="card__tags">
       <span>{{ getSeason(card?.aired_on) }}</span>

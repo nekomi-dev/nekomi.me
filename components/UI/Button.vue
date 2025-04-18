@@ -21,8 +21,8 @@ const { isMobile } = useDevice();
 
 const props = defineProps({
   typeStyle: {
-    type: Array,
-    default: () => [],
+    type: String,
+    default: "",
   },
   disabled: {
     type: Boolean,

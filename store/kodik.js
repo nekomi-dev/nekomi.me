@@ -12,7 +12,7 @@ export const kodik = defineStore({
     };
   },
   actions: {
-    async getTitle(params) {
+    async getTitle(params = {}) {
       try {
         const res = await axios({
           method: "GET",
@@ -20,8 +20,11 @@ export const kodik = defineStore({
           params,
         });
         this.title = res.data;
+
+        return res.data;
       } catch (err) {
         console.error(err);
+        return null;
       }
     },
   },

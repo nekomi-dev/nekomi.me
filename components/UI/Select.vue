@@ -1,24 +1,21 @@
 <template>
   <MultiSelect
-    v-model="model"
-    :options="props.options"
+    :model-value="modelValue"
+    @update:model-value="$emit('update:modelValue', $event)"
+    :options="options"
     optionLabel="name"
     filter
-    :placeholder="props.placeholder"
+    :placeholder="placeholder"
     :maxSelectedLabels="2"
   />
 </template>
-
-<script setup>
-const model = defineModel();
-const props = defineProps({
-  options: {
-    type: Array,
-    required: true,
+<script>
+export default {
+  props: {
+    modelValue: null,
+    options: { type: Array, required: true },
+    placeholder: { type: String, required: true },
   },
-  placeholder: {
-    type: String,
-    required: true,
-  },
-});
+  emits: ["update:modelValue"],
+};
 </script>

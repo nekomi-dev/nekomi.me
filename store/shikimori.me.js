@@ -37,19 +37,27 @@ export const shikimori = defineStore({
         return res.data;
       } catch (err) {
         console.error(err);
+        return null;
       }
     },
-    async getTitles() {
+    async getTitles(params = {}) {
       try {
         const res = await axios({
           method: "GET",
-          url: `${shikimoriAPI}/animes?limit=25&order=popularity`,
+          url: `${shikimoriAPI}/animes`,
+          params: {
+            limit: params.limit,
+            order: params.order,
+            search: params.search,
+            rating: params.rating,
+          },
         });
         this.titleList = res.data;
 
         return res.data;
       } catch (err) {
         console.error(err);
+        return null;
       }
     },
     async getTitleRandom() {

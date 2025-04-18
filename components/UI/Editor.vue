@@ -220,7 +220,9 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "~/assets/scss/_variables.scss";
+
 .editor-wrapper {
   width: 100%;
   padding: 20px 25px;
@@ -233,6 +235,10 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   gap: 40px;
+
+  @media screen and (max-width: $medium) {
+    padding: 12px;
+  }
 }
 
 .editor-toolbar {

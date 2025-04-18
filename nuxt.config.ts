@@ -10,7 +10,13 @@ export default defineNuxtConfig({
       linkExactActiveClass: "exact-active",
     },
   },
-  modules: ["@pinia/nuxt", "nuxt-primevue", "@nuxt/image", "nuxt-swiper", "@nuxtjs/device"],
+  modules: [
+    "@pinia/nuxt",
+    "nuxt-primevue",
+    "@nuxt/image",
+    "nuxt-swiper",
+    "@nuxtjs/device",
+  ],
   primevue: {
     importPT: {
       as: "DefaultPreset",
@@ -182,6 +188,11 @@ export default defineNuxtConfig({
     },
     directives: {
       include: ["tooltip"],
+    },
+  },
+  runtimeConfig: {
+    public: {
+      kodikToken: process.env.KODIK_TOKEN,
     },
   },
 });

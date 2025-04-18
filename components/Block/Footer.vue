@@ -12,15 +12,10 @@
 </template>
 <script setup>
 const { isMobile } = useDevice();
-
-// import { anilibria } from "@/store/anilibria";
-// const anilibriaStore = anilibria();
-
-// await anilibriaStore.getTitleRandom();
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/scss/imports";
+@import "~/assets/scss/_variables.scss";
 
 .footer {
   width: 100%;

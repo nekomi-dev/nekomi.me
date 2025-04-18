@@ -1,5 +1,13 @@
 <template>
   <div>
+    <!-- <Script>
+      var kodikAddPlayers = { shikimoriID: animeID, camrip: false, types:
+      "anime,anime-serial", hide_selectors: true, }; !(function (e, n, t, r, a)
+      { (r = e.createElement(n)), (a = e.getElementsByTagName(n)[0]), (r.async =
+      !0), (r.src = t), a.parentNode.insertBefore(r, a); })(document, "script",
+      "//kodik-add.com/add-players.min.js");
+    </Script> -->
+
     <!-- <Script
       @load="loadPlayer"
       src="/lib/player.js"
@@ -14,26 +22,50 @@
         <div class="player__container">
           <div class="player__video" :class="{ closed: !isChat }">
             <div class="player__videoPlayer">
-              <video
+              <!-- <video
                 src="/anime_video.mp4"
                 controls
                 autoplay
                 preload="auto"
-              ></video>
+              ></video> -->
+              <iframe
+                id="player"
+                :src="`//kodik.cc/find-player?shikimoriID=${animeID}&camrip=false&types=anime,anime-serial&hide_selectors=true&episode=${selects.currentEpisode}`"
+                width="610px"
+                height="370px"
+                frameborder="0"
+                allowfullscreen
+                allow="autoplay *; fullscreen *"
+              ></iframe>
+              <!-- <iframe
+                id="player"
+                :key="selects.currentEpisode"
+                :src="`${kodikData?.results[0]?.link}`"
+                width="610px"
+                height="370px"
+                frameborder="0"
+                allowfullscreen
+                allow="autoplay *; fullscreen *"
+              ></iframe> -->
               <!-- <div id="player"></div> -->
 
-              <div class="player__episodes">
+              <div class="player__episodes" ref="episodesContainer">
                 <div
-                  v-for="idx in data?.episodes"
+                  v-for="idx in shikiData?.episodes"
                   class="player__episodes-item"
                   :class="{
                     'player__episodes-item--active':
-                      selects.currentItem === idx--,
+                      selects.currentEpisode === idx,
                   }"
                   :key="idx"
-                  @click="selects.currentItem = idx--"
+                  :ref="
+                    (el) => {
+                      if (idx === selects.currentEpisode) activeEpisodeRef = el;
+                    }
+                  "
+                  @click="selectEpisode(idx)"
                 >
-                  {{ idx++ + " серия" }}
+                  {{ idx + " серия" }}
                 </div>
               </div>
             </div>
@@ -41,11 +73,15 @@
             <div class="player__info">
               <div class="player__info-text">
                 <h1 class="player__info-title">
-                  {{ data?.license_name_ru || data?.russian || data?.name }}
+                  {{
+                    shikiData?.russian ||
+                    shikiData?.license_name_ru ||
+                    shikiData?.name
+                  }}
                 </h1>
 
                 <p class="player__info-tags">
-                  <span>{{ data?.episodes }} эпизодов</span>
+                  <span>{{ shikiData?.episodes }} эпизодов</span>
                   <IconIcons dot :size="3" color="var(--white-alpha50)" />
                   <span>Реклама</span>
                   <IconIcons dot :size="3" color="var(--white-alpha50)" />
@@ -89,39 +125,26 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { shikimori } from "~/store/shikimori.me";
+// import { kodik } from "~/store/kodik";
 const shikimoriStore = shikimori();
 const shikimoriURL = "https://shikimori.one";
+// const kodikStore = kodik();
 
 const route = useRoute();
+const config = useRuntimeConfig();
+const animeID = ref(route.params.id);
 
 const { isMobile } = useDevice();
 
-const { data } = await useAsyncData("shikimori-one", async () => {
-  return await shikimoriStore.getTitle({
-    id: route.params.id,
-  });
-});
-
-const episodes = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "11",
-  "12",
-];
+const { data: shikiData } = useAsyncData(
+  "shikimori-anime",
+  async () => await shikimoriStore.getTitle({ id: animeID.value })
+);
 
 const selects = ref({
-  currentEpisode: null,
+  currentEpisode: 1,
   currentDub: null,
   currentPlayer: null,
 });
@@ -131,11 +154,22 @@ const isChat = ref(true);
 const toggleChat = () => {
   if (isChat.value && !isMobile) {
     setTimeout(() => {
-      window.scrollTo({
-        top: 120,
-        behavior: "smooth",
-      });
-    }, 270);
+      if (process.client) {
+        window.scrollTo({
+          top: window.innerHeight / 2,
+          behavior: "smooth",
+        });
+      }
+    }, 170);
+  } else {
+    setTimeout(() => {
+      if (process.client) {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    }, 170);
   }
 
   isChat.value = !isChat.value;
@@ -143,22 +177,70 @@ const toggleChat = () => {
 
 const comment = ref("");
 
-// const loadPlayer = () => {
-//   let player = new Playerjs({
-//     id: "player",
-//     file: "/anime_video.mp4",
-//   });
-// };
+// const { data: kodikData, refresh: refreshKodik } = await useAsyncData(
+//   "kodik-anime",
+//   async () => {
+//     return await kodikStore.getTitle({
+//       token: config.public.kodikToken,
+//       shikimori_id: animeID.value,
+//       translation_type: "voice",
+//       episode: selects.value.currentEpisode,
+//       camrip: false,
+//       hide_selectors: true,
+//     });
+//   }
+// );
+
+const episodesContainer = ref(null);
+const activeEpisodeRef = ref(null);
+
+const selectEpisode = (episode) => {
+  selects.value.currentEpisode = episode;
+
+  nextTick(() => {
+    if (activeEpisodeRef.value && episodesContainer.value) {
+      const container = episodesContainer.value;
+      const element = activeEpisodeRef.value;
+
+      const containerWidth = container.offsetWidth;
+      const elementWidth = element.offsetWidth;
+
+      const scrollPosition =
+        element.offsetLeft - containerWidth / 4 + elementWidth / 2;
+
+      if (process.client) {
+        container.scrollTo({
+          left: scrollPosition,
+          behavior: "smooth",
+        });
+      }
+    }
+  });
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/scss/imports";
+@import "~/assets/scss/_variables.scss";
 
 .container--player {
   height: calc(100dvh - 250px);
 
+  @media screen and (max-width: $medium) {
+    height: 100%;
+
+    padding: 0px 8px;
+  }
+
+  @media screen and (max-width: $small) {
+    height: 100%;
+  }
+
   &-reduced {
     height: 100dvh;
+
+    @media screen and (max-width: $small) {
+      height: calc(100dvh - 350px);
+    }
   }
 }
 
@@ -180,7 +262,7 @@ const comment = ref("");
     padding: 30px;
 
     @media (max-width: $medium) {
-      padding: 15px;
+      padding: 8px;
       flex-direction: column;
 
       gap: 40px;
@@ -189,6 +271,7 @@ const comment = ref("");
 
   &__video {
     width: 65%;
+    height: max-content;
 
     display: flex;
     flex-direction: column;
@@ -226,6 +309,7 @@ const comment = ref("");
 
     & > #player {
       width: 100%;
+      height: 100%;
       margin-bottom: 10px;
 
       aspect-ratio: 16/9;
@@ -250,6 +334,7 @@ const comment = ref("");
     }
     -ms-overflow-style: none;
     scrollbar-width: none;
+    scroll-behavior: smooth;
 
     &-item {
       cursor: pointer;

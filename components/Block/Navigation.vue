@@ -43,16 +43,13 @@
             Настройки
           </template></UIButton
         >
-        <UIButton
-          v-if="!isAuth"
-          @click="router.push('/auth')"
-          typeStyle="['blue']"
+        <UIButton v-if="!isAuth" @click="router.push('/auth')" typeStyle="blue"
           >Войти</UIButton
         >
         <div class="navigation__container-item-auth">
           <span v-if="isAuth && !isMobile">{{ user?.name }}</span>
 
-          <UIButton v-if="isAuth" @click="logout" typeStyle="['blue']">
+          <UIButton v-if="isAuth" @click="logout" typeStyle="blue">
             Выйти
           </UIButton>
         </div>
@@ -74,11 +71,6 @@ import { useAuth } from "~/composables/useAuth";
 const router = useRouter();
 const { isAuth, user, logout } = useAuth();
 
-// import { anilibria } from "@/store/anilibria";
-// const anilibriaStore = anilibria();
-
-// await anilibriaStore.getTitleRandom();
-
 import { shikimori } from "~/store/shikimori.me";
 const shikimoriStore = shikimori();
 const shikimoriURL = "https://shikimori.one";
@@ -95,13 +87,13 @@ const getRandomAnime = async () => {
 };
 
 // Загружаем первое случайное аниме при монтировании
-onMounted(async () => {
-  randomAnime.value = await shikimoriStore.getTitleRandom();
-});
+// onMounted(async () => {
+//   randomAnime.value = await shikimoriStore.getTitleRandom();
+// });
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/scss/imports";
+@import "~/assets/scss/_variables.scss";
 
 .navigation {
   width: 100%;

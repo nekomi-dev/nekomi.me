@@ -62,7 +62,7 @@
 
 <script setup></script>
 <style lang="scss" scoped>
-@import "~/assets/scss/imports";
+@import "~/assets/scss/_variables.scss";
 
 .banner {
   width: 100%;

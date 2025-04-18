@@ -3,14 +3,46 @@ import { shikimori } from "~/store/shikimori.me";
 const shikimoriStore = shikimori();
 const shikimoriURL = "https://shikimori.one";
 
+import { debounce } from "~/composables/useDebounce.js";
 const { isMobile } = useDevice();
 
 const search = ref("");
 const view = ref("grid");
 
-const { data } = useAsyncData("shikimori-all", async () => {
-  return await shikimoriStore.getTitles();
+const params = ref({
+  limit: 25,
+  order: "popularity",
+  search: search.value,
+  // rating: "none",
 });
+
+const debouncedSearch = debounce(() => {
+  params.value.search = search.value;
+  refresh();
+}, 700);
+
+const clearSearch = () => {
+  params.value.search = "";
+  search.value = "";
+  refresh();
+};
+
+const { data, refresh } = useAsyncData(
+  "shikimori-animes",
+  async () => await shikimoriStore.getTitles(params.value),
+  {
+    watch: [params],
+  }
+);
+
+watch(
+  () => params.value.search,
+  (newValue) => {
+    if (newValue !== undefined) {
+      refresh();
+    }
+  }
+);
 </script>
 <template>
   <div class="grid">
@@ -22,12 +54,13 @@ const { data } = useAsyncData("shikimori-all", async () => {
         <div class="grid__search">
           <input
             v-model="search"
+            @input="debouncedSearch"
             type="text"
             placeholder="Поиск по каталогу..."
           />
           <span
             v-if="search.trim().length > 0"
-            @click="search = ''"
+            @click="clearSearch()"
             class="grid__search-reset"
           >
             <IconIcons cancle :size="12" color="var(--white-alpha50)" />
@@ -55,14 +88,15 @@ const { data } = useAsyncData("shikimori-all", async () => {
           </div>
         </div>
       </div>
-      <div class="grid__wrapper">
+      <div class="grid__wrapper" v-if="data?.length > 0">
         <UICard v-for="(item, idx) in data" :key="idx" :card="item"></UICard>
       </div>
+      <h2 v-else>Аниме не найдено</h2>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
-@import "~/assets/scss/imports";
+@import "~/assets/scss/_variables.scss";
 
 .grid {
   width: 100%;

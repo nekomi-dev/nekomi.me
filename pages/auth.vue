@@ -1,22 +1,29 @@
 <template>
-  <div class="auth-container">
-    <div class="auth-form">
-      <h2>Авторизация</h2>
-      <div class="form-group">
-        <input v-model="email" type="email" placeholder="Email" class="input" />
+  <div>
+    <div class="auth-container">
+      <div class="auth-form">
+        <h2>Авторизация</h2>
+        <div class="form-group">
+          <input
+            v-model="email"
+            type="email"
+            placeholder="Email"
+            class="input"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            v-model="password"
+            type="password"
+            placeholder="Пароль"
+            class="input"
+          />
+        </div>
+        <NuxtLink class="auth-form__link" to="/reg"
+          >Нет аккаунта? Зарегистрируйтесь</NuxtLink
+        >
+        <UIButton typeStyle="blue" @click="handleLogin"> Войти </UIButton>
       </div>
-      <div class="form-group">
-        <input
-          v-model="password"
-          type="password"
-          placeholder="Пароль"
-          class="input"
-        />
-      </div>
-      <NuxtLink class="auth-form__link" to="/reg"
-        >Нет аккаунта? Зарегистрируйтесь</NuxtLink
-      >
-      <UIButton :typeStyle="['blue']" @click="handleLogin"> Войти </UIButton>
     </div>
   </div>
 </template>
