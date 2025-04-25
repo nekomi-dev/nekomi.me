@@ -5,6 +5,14 @@
         <h2>Регистрация</h2>
         <div class="form-group">
           <input
+            v-model="username"
+            type="text"
+            placeholder="Username"
+            class="input"
+          />
+        </div>
+        <div class="form-group">
+          <input
             v-model="email"
             type="email"
             placeholder="Email"
@@ -22,7 +30,9 @@
         <NuxtLink class="auth-form__link" to="/auth"
           >Есть аккаунт? Авторизуйтесь</NuxtLink
         >
-        <UIButton typeStyle="blue" @click="handleLogin"> Войти </UIButton>
+        <UIButton typeStyle="blue" @click="handleRegister" :loading="loading">
+          Зарегистрироваться
+        </UIButton>
       </div>
     </div>
   </div>
@@ -30,38 +40,55 @@
 
 <script setup>
 import { useAuth } from "~/composables/useAuth";
+import { useMyApiStore } from "~/store/api";
 
+const username = ref("");
 const email = ref("");
 const password = ref("");
+const loading = ref(false);
 
 const { updateAuth } = useAuth();
-const router = useRouter();
+const apiStore = useMyApiStore();
 
-const handleLogin = async () => {
+const handleRegister = async () => {
   try {
-    if (!email.value || !password.value) {
+    if (!username.value || !email.value || !password.value) {
       return alert("Заполните все поля");
     }
 
-    // Проверка статических учетных данных
-    if (email.value === "hikeru1@icloud.com" && password.value === "admin") {
+    loading.value = true;
+
+    const response = await apiStore.postRegistration({
+      username: username.value,
+      email: email.value,
+      password: password.value,
+    });
+
+    if (response) {
+      const { accessToken, user } = response;
+      const userData = {
+        username: user.username,
+        role: user.role,
+      };
+
+      // Сохраняем токен и данные пользователя
+      localStorage.setItem("token", accessToken);
       localStorage.setItem("isAuth", "true");
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          email: email.value,
-          role: "admin",
-          name: "Никита",
-        })
-      );
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      // Обновляем состояние аутентификации
       updateAuth();
+
+      // Перенаправляем на главную
       await navigateTo("/");
-    } else {
-      alert("Ошибка при регистрации (Неправильный email или пароль)");
     }
   } catch (error) {
-    alert("Ошибка при регистрации");
+    const errorMessage =
+      error.response?.data?.message || "Ошибка при регистрации";
+    alert(errorMessage);
     console.error(error);
+  } finally {
+    loading.value = false;
   }
 };
 </script>

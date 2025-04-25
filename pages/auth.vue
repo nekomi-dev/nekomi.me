@@ -5,9 +5,9 @@
         <h2>Авторизация</h2>
         <div class="form-group">
           <input
-            v-model="email"
-            type="email"
-            placeholder="Email"
+            v-model="username"
+            type="text"
+            placeholder="Username"
             class="input"
           />
         </div>
@@ -22,7 +22,9 @@
         <NuxtLink class="auth-form__link" to="/reg"
           >Нет аккаунта? Зарегистрируйтесь</NuxtLink
         >
-        <UIButton typeStyle="blue" @click="handleLogin"> Войти </UIButton>
+        <UIButton typeStyle="blue" @click="handleLogin" :loading="loading">
+          Войти
+        </UIButton>
       </div>
     </div>
   </div>
@@ -30,37 +32,55 @@
 
 <script setup>
 import { useAuth } from "~/composables/useAuth";
+import { useMyApiStore } from "~/store/api";
 
-const email = ref("");
+const username = ref("");
 const password = ref("");
+const loading = ref(false);
 
 const { updateAuth } = useAuth();
+const apiStore = useMyApiStore();
 
 const handleLogin = async () => {
   try {
-    if (!email.value || !password.value) {
+    if (!username.value || !password.value) {
       return alert("Заполните все поля");
     }
 
-    // Проверка статических учетных данных
-    if (email.value === "hikeru1@icloud.com" && password.value === "admin") {
+    loading.value = true;
+
+    const response = await apiStore.login({
+      username: username.value,
+      password: password.value,
+    });
+
+    if (response) {
+      const { accessToken, user } = response;
+      console.log(response);
+
+      const userData = {
+        username: user.username,
+        role: user.role,
+      };
+
+      // Сохраняем токен и данные пользователя
+      localStorage.setItem("token", accessToken);
       localStorage.setItem("isAuth", "true");
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          email: email.value,
-          role: "admin",
-          name: "Никита",
-        })
-      );
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      // Обновляем состояние аутентификации
       updateAuth();
+
+      // Перенаправляем на главную
       await navigateTo("/");
-    } else {
-      alert("Неверный email или пароль");
     }
   } catch (error) {
-    alert("Ошибка при авторизации");
+    const errorMessage =
+      error.response?.data?.message || "Ошибка при авторизации";
+    alert(errorMessage);
     console.error(error);
+  } finally {
+    loading.value = false;
   }
 };
 </script>

@@ -47,7 +47,7 @@
           >Войти</UIButton
         >
         <div class="navigation__container-item-auth">
-          <span v-if="isAuth && !isMobile">{{ user?.name }}</span>
+          <span v-if="isAuth && !isMobile">{{ user?.username }}</span>
 
           <UIButton v-if="isAuth" @click="logout" typeStyle="blue">
             Выйти
