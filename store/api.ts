@@ -1,7 +1,7 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 
-const api = "http://localhost:4280/api";
+const api = "https://nekomi-api.aepstore.su/api";
 
 export const useMyApiStore = defineStore({
   id: "apiStore",
