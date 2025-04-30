@@ -4,19 +4,18 @@ FROM node:22-alpine AS build
 WORKDIR /app
 
 RUN corepack enable
-RUN npm install -g yarn
 
 # Copy package.json and your lockfile, here we add pnpm-lock.yaml for illustration
-COPY package.json yarn.lock .npmrc ./
+COPY package.json package-lock.json .npmrc ./
 
 # Install dependencies
-RUN yarn i
+RUN npm i
 
 # Copy the entire project
 COPY . ./
 
 # Build the project
-RUN yarn build
+RUN npm run build
 
 # Build Stage 2
 
